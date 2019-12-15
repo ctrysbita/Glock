@@ -65,11 +65,12 @@ void SkyBox::Draw(Camera& camera) {
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
 
+  glBindTexture(GL_TEXTURE_2D, texture_id_);
   glBindVertexArray(vao_);
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_CUBE_MAP, texture_id_);
   glDrawArrays(GL_TRIANGLES, 0, 36);
-  glBindVertexArray(0);
 
+  glBindVertexArray(0);
   glDepthFunc(GL_LESS);
 }
