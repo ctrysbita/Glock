@@ -19,6 +19,9 @@
     <Filter Include="resources\textures\sky">
       <UniqueIdentifier>{6c434916-b19d-4c95-857e-c014cf659b27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources\models">
+      <UniqueIdentifier>{a8665ff2-dd22-4eb6-9f65-2cb764fb5ebe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -26,6 +29,12 @@
       <Filter>sources</Filter>
     </None>
     <None Include="src\sky.vs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\earth.vs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\earth.fs.glsl">
       <Filter>sources</Filter>
     </None>
   </ItemGroup>
@@ -48,6 +57,12 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="src\camera.hpp">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\models\earth.inc.h">
+      <Filter>resources\models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\earth.hpp">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

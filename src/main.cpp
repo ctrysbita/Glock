@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include "camera.hpp"
+#include "earth.hpp"
 #include "sky.h"
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -19,13 +20,26 @@ void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
   camera.ProcessMouseScroll(yoffset);
 }
 
-void Display(SkyBox& sky) {
+void Display(SkyBox& sky, Earth& earth) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // glMatrixMode(GL_MODELVIEW);
 
   sky.Draw(camera);
+  earth.Draw(camera);
+
+  // glUseProgram(0);
+  // glBegin(GL_QUADS);
+  // glColor3f(0.0, 0.0, 0.0);
+
+  // glVertex3f(0.1, 0.1, 0.0);
+  // glVertex3f(0.9, 0.1, 0.0);
+  // glVertex3f(0.9, 0.9, 0.0);
+  // glVertex3f(0.1, 0.9, 0.0);
+  // glEnd();
+
+  glFlush();
 }
 
 int main(int argc, char** argv) {
@@ -64,11 +78,13 @@ int main(int argc, char** argv) {
 
   auto sky = SkyBox();
   sky.LoadCubeMap();
+  auto earth = Earth();
+  earth.LoadTexture();
 
   while (!glfwWindowShouldClose(window)) {
     camera.ProcessKeyboard(window);
 
-    Display(sky);
+    Display(sky, earth);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

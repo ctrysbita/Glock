@@ -147,6 +147,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="src\earth.fs.glsl" />
+    <None Include="src\earth.vs.glsl" />
     <None Include="src\sky.fs.glsl" />
     <None Include="src\sky.vs.glsl" />
   </ItemGroup>
@@ -156,7 +158,9 @@
     <ClCompile Include="src\sky.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resources\models\earth.inc.h" />
     <ClInclude Include="src\camera.hpp" />
+    <ClInclude Include="src\earth.hpp" />
     <ClInclude Include="src\shader.hpp" />
     <ClInclude Include="src\sky.h" />
   </ItemGroup>
