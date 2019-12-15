@@ -36,12 +36,18 @@
     <ClCompile Include="src\glad.c">
       <Filter>sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\sky.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\sky.hpp">
+    <ClInclude Include="src\shader.hpp">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\shader.hpp">
+    <ClInclude Include="src\sky.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera.hpp">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

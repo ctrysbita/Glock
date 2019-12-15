@@ -1,22 +1,31 @@
 #include <glad/glad.h>
 // Include glad first.
-
 #include <GLFW/glfw3.h>
 
-#include "sky.hpp"
+#include "camera.hpp"
+#include "sky.h"
 
-void reshape(GLFWwindow* window, GLsizei width, GLsizei height) {
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
+void Reshape(GLFWwindow* window, GLsizei width, GLsizei height) {
   glViewport(0, 0, width, height);
 }
 
-void display() {
+void MouseMovementCallback(GLFWwindow* window, double xpos, double ypos) {
+  camera.ProcessMouseMovement(xpos, ypos);
+}
+
+void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+  camera.ProcessMouseScroll(yoffset);
+}
+
+void Display(SkyBox& sky) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glMatrixMode(GL_MODELVIEW);
-  glColor3f(1, 0, 0);
+  // glMatrixMode(GL_MODELVIEW);
 
-  auto sky = SkyBox();
+  sky.Draw(camera);
 }
 
 int main(int argc, char** argv) {
@@ -38,7 +47,9 @@ int main(int argc, char** argv) {
   }
   glfwMakeContextCurrent(window);
   // Register callbacks.
-  glfwSetFramebufferSizeCallback(window, reshape);
+  glfwSetFramebufferSizeCallback(window, Reshape);
+  glfwSetCursorPosCallback(window, MouseMovementCallback);
+  glfwSetScrollCallback(window, MouseScrollCallback);
 
   // Initialization of GLAD.
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -51,8 +62,13 @@ int main(int argc, char** argv) {
   glShadeModel(GL_SMOOTH);
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
+  auto sky = SkyBox();
+  sky.LoadCubeMap();
+
   while (!glfwWindowShouldClose(window)) {
-    display();
+    camera.ProcessKeyboard(window);
+
+    Display(sky);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
