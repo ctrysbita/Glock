@@ -58,7 +58,7 @@ class Camera {
     return glm::lookAt(position_, position_ + front_, up_);
   }
 
-  void ProcessKeyboard(GLFWwindow* window) {
+  void ProcessKeyboard(GLFWwindow *window) {
     auto current_time = glfwGetTime();
     auto delta = current_time - last_keyboard_time_;
     last_keyboard_time_ = current_time;

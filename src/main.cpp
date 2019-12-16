@@ -7,21 +7,21 @@
 #include "earth.h"
 #include "sky.h"
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
-void Reshape(GLFWwindow* window, GLsizei width, GLsizei height) {
+void Reshape(GLFWwindow *window, GLsizei width, GLsizei height) {
   glViewport(0, 0, width, height);
 }
 
-void MouseMovementCallback(GLFWwindow* window, double xpos, double ypos) {
+void MouseMovementCallback(GLFWwindow *window, double xpos, double ypos) {
   camera.ProcessMouseMovement(xpos, ypos);
 }
 
-void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+void MouseScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
   camera.ProcessMouseScroll(yoffset);
 }
 
-void Display(SkyBox& sky, Earth& earth, Dial& dial) {
+void Display(SkyBox &sky, Earth &earth, Dial &dial) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -44,12 +44,12 @@ void Display(SkyBox& sky, Earth& earth, Dial& dial) {
   glFlush();
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   // Initialization of GLFW.
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);

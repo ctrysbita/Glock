@@ -15,9 +15,13 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "gdb.exe",
+            "miDebuggerPath": "gdb",
             "windows": {
                 "program": "${workspaceFolder}/src/main.exe",
+                "miDebuggerPath": "gdb.exe",
+            },
+            "osx": {
+                "miDebuggerPath": "lldb",
             },
             "setupCommands": [
                 {

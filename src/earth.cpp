@@ -1,45 +1,26 @@
 #include "earth.h"
 
 #include "../resources/models/earth.inc.h"
+#include "time_controller.hpp"
 
 float ang = 0;
+TimeController timing;
 
 Earth::Earth()
     : ModelComponent("src/earth.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
                      &vertices, sizeof(indices), indices,
-                     "resources/textures/earth.jpg") {
-  glGenBuffers(1, &vbo_);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo_);
+                     "resources/textures/earth.jpg") {}
 
-  glGenVertexArrays(1, &vao_);
-  glBindVertexArray(vao_);
-
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-
-  glGenBuffers(1, &ebo_);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
-               GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ModelVertex), 0);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(ModelVertex),
-                        (void*)sizeof(ModelVertex::position));
-  glVertexAttribPointer(
-      2, 2, GL_FLOAT, GL_FALSE, sizeof(ModelVertex),
-      (void*)(sizeof(ModelVertex::position) + sizeof(ModelVertex::normal)));
-
-  glEnableVertexAttribArray(0);
-  glEnableVertexAttribArray(1);
-  glEnableVertexAttribArray(2);
-}
-
-void Earth::Draw(Camera& camera) {
+void Earth::Draw(Camera &camera)
+{
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   shader_.Use();
   auto model = glm::mat4(1.0f);
   ang += 0.1;
-  model = glm::translate(model, glm::vec3(0, 0, -10));
-  model = glm::rotate(model, glm::radians(ang), glm::vec3(0.0f, 1.0f, 0.0f));
+  model = glm::rotate(model, glm::radians(float(-(timing.GetSubsec() / 10000 / 100.0 + timing.GetSec()) / 60.0 * 360)), glm::vec3(0.0f, 1.0f, 0.0f));
+  timing.UpdateTime();
+  model = glm::translate(model, glm::vec3(0, 0.5, -0.75));
+  //  model = glm::scale(model, glm::vec3(0.5, 0.5, 0.5));
   auto view = camera.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(camera.zoom_),
                                      (float)1280 / (float)720, 0.1f, 100.0f);

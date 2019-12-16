@@ -7,11 +7,12 @@ Dial::Dial()
                      &vertices, sizeof(indices), indices,
                      "resources/textures/dial.jpg") {}
 
-void Dial::Draw(Camera& camera) {
+void Dial::Draw(Camera &camera) {
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   shader_.Use();
   auto model = glm::mat4(1.0f);
-  model = glm::translate(model, glm::vec3(0, 0, -10));
+  model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
+  model = glm::scale(model, glm::vec3(1, 0.5, 1));
   auto view = camera.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(camera.zoom_),
                                      (float)1280 / (float)720, 0.1f, 100.0f);
