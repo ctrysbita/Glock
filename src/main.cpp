@@ -3,7 +3,8 @@
 #include <GLFW/glfw3.h>
 
 #include "camera.hpp"
-#include "earth.hpp"
+#include "dial.h"
+#include "earth.h"
 #include "sky.h"
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -20,7 +21,7 @@ void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
   camera.ProcessMouseScroll(yoffset);
 }
 
-void Display(SkyBox& sky, Earth& earth) {
+void Display(SkyBox& sky, Earth& earth, Dial& dial) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -28,6 +29,7 @@ void Display(SkyBox& sky, Earth& earth) {
 
   sky.Draw(camera);
   earth.Draw(camera);
+  dial.Draw(camera);
 
   // glUseProgram(0);
   // glBegin(GL_QUADS);
@@ -79,12 +81,12 @@ int main(int argc, char** argv) {
   auto sky = SkyBox();
   sky.LoadCubeMap();
   auto earth = Earth();
-  earth.LoadTexture();
+  auto dial = Dial();
 
   while (!glfwWindowShouldClose(window)) {
     camera.ProcessKeyboard(window);
 
-    Display(sky, earth);
+    Display(sky, earth, dial);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

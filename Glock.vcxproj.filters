@@ -37,6 +37,9 @@
     <None Include="src\earth.fs.glsl">
       <Filter>sources</Filter>
     </None>
+    <None Include="src\dial.vs.glsl">
+      <Filter>sources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -46,6 +49,12 @@
       <Filter>sources</Filter>
     </ClCompile>
     <ClCompile Include="src\sky.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dial.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\earth.cpp">
       <Filter>sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +71,16 @@
     <ClInclude Include="resources\models\earth.inc.h">
       <Filter>resources\models</Filter>
     </ClInclude>
-    <ClInclude Include="src\earth.hpp">
+    <ClInclude Include="resources\models\dial.inc.h">
+      <Filter>resources\models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dial.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\component.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\earth.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -147,20 +147,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="src\dial.vs.glsl" />
     <None Include="src\earth.fs.glsl" />
     <None Include="src\earth.vs.glsl" />
     <None Include="src\sky.fs.glsl" />
     <None Include="src\sky.vs.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\dial.cpp" />
+    <ClCompile Include="src\earth.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\sky.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources\models\earth.inc.h" />
+    <ClInclude Include="resources\models\dial.inc.h" />
     <ClInclude Include="src\camera.hpp" />
-    <ClInclude Include="src\earth.hpp" />
+    <ClInclude Include="src\component.h" />
+    <ClInclude Include="src\dial.h" />
+    <ClInclude Include="src\earth.h" />
     <ClInclude Include="src\shader.hpp" />
     <ClInclude Include="src\sky.h" />
   </ItemGroup>
