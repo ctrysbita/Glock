@@ -3,7 +3,7 @@
 #include "../resources/models/dial.inc.h"
 
 Dial::Dial()
-    : ModelComponent("src/dial.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
+    : ModelComponent("src/dial.vs.glsl", "src/dial.fs.glsl", sizeof(vertices),
                      &vertices, sizeof(indices), indices,
                      "resources/textures/dial.jpg") {}
 

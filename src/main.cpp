@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
   // Initialization of GLFW.
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
 #ifdef __APPLE__
@@ -57,7 +57,9 @@ int main(int argc, char** argv) {
 
   auto window = glfwCreateWindow(1280, 720, "Glock", NULL, NULL);
   if (window == NULL) {
-    std::cerr << "Error: Failed to create window." << std::endl;
+    auto err_code = glfwGetError(NULL);
+    std::cerr << "Error: Failed to create window. code: " << err_code
+              << std::endl;
     glfwTerminate();
     return -1;
   }
