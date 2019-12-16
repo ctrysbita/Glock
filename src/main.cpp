@@ -64,10 +64,14 @@ int main(int argc, char **argv) {
     return -1;
   }
   glfwMakeContextCurrent(window);
+
   // Register callbacks.
   glfwSetFramebufferSizeCallback(window, Reshape);
   glfwSetCursorPosCallback(window, MouseMovementCallback);
   glfwSetScrollCallback(window, MouseScrollCallback);
+
+  // Capture mouse.
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
   // Initialization of GLAD.
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -86,6 +90,7 @@ int main(int argc, char **argv) {
   auto dial = Dial();
 
   while (!glfwWindowShouldClose(window)) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) break;
     camera.ProcessKeyboard(window);
 
     Display(sky, earth, dial);
