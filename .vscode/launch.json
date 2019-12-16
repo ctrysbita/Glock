@@ -8,7 +8,7 @@
             "name": "DebugMain",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/src/main.exe",
+            "program": "${workspaceFolder}/src/main",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -16,6 +16,9 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "gdb.exe",
+            "windows": {
+                "program": "${workspaceFolder}/src/main.exe",
+            },
             "setupCommands": [
                 {
                     "description": "Enable pretty printing",
