@@ -1,6 +1,6 @@
 #include "earth.h"
 
-#include "../resources/models/earth.inc.h"
+#include "../resources/models/sphere.inc.h"
 #include "time_controller.hpp"
 
 float ang = 0;

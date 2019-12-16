@@ -12,7 +12,6 @@ void Dial::Draw(Camera &camera) {
   shader_.Use();
   auto model = glm::mat4(1.0f);
   model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
-  model = glm::scale(model, glm::vec3(1, 0.5, 1));
   auto view = camera.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(camera.zoom_),
                                      (float)1280 / (float)720, 0.1f, 100.0f);

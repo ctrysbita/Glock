@@ -349,4 +349,6 @@ healthchecksdb
 MigrationBackup/
 
 *.o
+main
 *.exe
+*.jpg
