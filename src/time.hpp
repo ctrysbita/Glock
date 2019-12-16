@@ -23,4 +23,12 @@ class Time {
   static auto Seconds() { return GetTimeOfDay().seconds().count(); }
 
   static auto Subseconds() { return GetTimeOfDay().subseconds().count(); }
+
+  static auto Milliseconds() {
+#ifdef _MSC_VER
+    return Subseconds() / 10000;
+#else
+    return Subseconds();
+#endif
+  }
 };

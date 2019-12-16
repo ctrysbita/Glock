@@ -18,9 +18,8 @@ void Earth::Draw(Camera &camera) {
 
   model = glm::rotate(
       model,
-      glm::radians(
-          float(-(Time::Seconds() + Time::Subseconds() / 10000 / 1000.0) /
-                60.0 * 360)),
+      glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) /
+                         60.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.5, -0.75));
   //  model = glm::scale(model, glm::vec3(0.5, 0.5, 0.5));
