@@ -169,6 +169,7 @@
     <ClInclude Include="src\earth.h" />
     <ClInclude Include="src\shader.hpp" />
     <ClInclude Include="src\sky.h" />
+    <ClInclude Include="src\time.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\textures\sky\back.jpg" />

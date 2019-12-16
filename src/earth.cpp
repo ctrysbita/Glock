@@ -1,10 +1,9 @@
 #include "earth.h"
 
 #include "../resources/models/sphere.inc.h"
-#include "time_controller.hpp"
+#include "time.hpp"
 
 float ang = 0;
-TimeController timing;
 
 Earth::Earth()
     : ModelComponent("src/earth.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
@@ -16,12 +15,13 @@ void Earth::Draw(Camera &camera) {
   shader_.Use();
   auto model = glm::mat4(1.0f);
   ang += 0.1;
-  model = glm::rotate(model,
-                      glm::radians(float(-(timing.GetSubsec() / 10000 / 100.0 +
-                                           timing.GetSec()) /
-                                         60.0 * 360)),
-                      glm::vec3(0.0f, 1.0f, 0.0f));
-  timing.UpdateTime();
+
+  model = glm::rotate(
+      model,
+      glm::radians(
+          float(-(Time::Seconds() + Time::Subseconds() / 10000 / 1000.0) /
+                60.0 * 360)),
+      glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.5, -0.75));
   //  model = glm::scale(model, glm::vec3(0.5, 0.5, 0.5));
   auto view = camera.GetViewMatrix();
@@ -30,7 +30,6 @@ void Earth::Draw(Camera &camera) {
   shader_.SetMat4("Model", model);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
-  auto aa = glGetError();
   glBindVertexArray(vao_);
   glDrawElements(GL_TRIANGLES, 11904, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
