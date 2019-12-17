@@ -62,7 +62,7 @@ class Camera {
     auto current_time = glfwGetTime();
     auto delta = current_time - last_keyboard_time_;
     last_keyboard_time_ = current_time;
-
+    // calculate moving distance
     float movement = speed_ * delta;
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
