@@ -11,7 +11,7 @@ Earth::Earth()
 void Earth::Draw(Context& context) {
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   shader_.Use();
-  auto model = glm::mat4(1.0f);
+  auto model = context.GetInitMat();
 
   auto hour = Time::Hours() + 8;
   if (hour >= 12) hour -= 12;
