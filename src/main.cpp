@@ -41,6 +41,9 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   glViewport(0, 0, context.window_width_, context.window_height_);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  glActiveTexture(GL_TEXTURE1);
+  glBindTexture(GL_TEXTURE_2D, context.depth_map_texture_);
+
   sky.Draw(context);
   dial.Draw(context);
   earth.Draw(context);

@@ -18,12 +18,19 @@ void Dial::Draw(Context& context) {
   auto view = context.camera_.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
                                      context.Ratio(), 0.1f, 100.0f);
+
+  auto light_view = glm::lookAt(context.light_position_, glm::vec3(0.0f),
+                                glm::vec3(0.0, 1.0, 0.0));
+  auto light_projection =
+      glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
+  auto light_space = light_projection * light_view;
   // Pass information to shader.
   shader_.Use();
   shader_.SetMat4("Model", model);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
   shader_.SetVec3("ViewPos", context.camera_.position_);
+  shader_.SetMat4("LightSpace", light_space);
 
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   glBindVertexArray(vao_);
