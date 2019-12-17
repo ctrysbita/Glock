@@ -6,5 +6,5 @@ uniform mat4 Model;
 uniform float PosFactor;
 
 void main() {
-    gl_Position = lightSpace * Model * vec4(pos * PosFactor, 1.0);
+    gl_Position = LightSpace * Model * vec4(pos * PosFactor, 1.0);
 }

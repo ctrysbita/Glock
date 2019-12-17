@@ -8,7 +8,7 @@ Dial::Dial()
                      "resources/textures/dial.jpg") {}
 
 glm::mat4 Dial::ModelTransformation(Context& context) {
-  auto model = context.clock_position_;
+  auto model = context.kClockPosition;
   model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
   return model;
 }

@@ -9,7 +9,7 @@ Mars::Mars()
                      "resources/textures/mars.jpg") {}
 
 glm::mat4 Mars::ModelTransformation(Context& context) {
-  auto model = context.clock_position_;
+  auto model = context.kClockPosition;
   model = glm::rotate(
       model,
       glm::radians(

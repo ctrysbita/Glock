@@ -9,7 +9,7 @@ Jupiter::Jupiter()
                      "resources/textures/jupiter.jpg") {}
 
 glm::mat4 Jupiter::ModelTransformation(Context& context) {
-  auto model = context.clock_position_;
+  auto model = context.kClockPosition;
   model = glm::rotate(
       model,
       glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) /

@@ -9,7 +9,7 @@ Earth::Earth()
                      "resources/textures/earth.jpg") {}
 
 glm::mat4 Earth::ModelTransformation(Context& context) {
-  auto model = context.clock_position_;
+  auto model = context.kClockPosition;
   auto hour = Time::Hours() + 8;
   if (hour >= 12) hour -= 12;
   model = glm::rotate(

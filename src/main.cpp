@@ -29,9 +29,21 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  glViewport(0, 0, 1024, 1024);
+  glBindFramebuffer(GL_FRAMEBUFFER, context.depth_map_frame_);
+
+  dial.DrawDepthMap(context);
+  earth.DrawDepthMap(context);
+  mars.DrawDepthMap(context);
+  jupiter.DrawDepthMap(context);
+
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  glViewport(0, 0, context.window_width_, context.window_height_);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
   sky.Draw(context);
-  earth.Draw(context);
   dial.Draw(context);
+  earth.Draw(context);
   mars.Draw(context);
   jupiter.Draw(context);
 
@@ -85,6 +97,8 @@ int main(int argc, char **argv) {
   glEnable(GL_DEPTH_TEST);
   glShadeModel(GL_SMOOTH);
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+  context.InitDepthMap();
 
   auto sky = SkyBox();
   sky.LoadCubeMap();

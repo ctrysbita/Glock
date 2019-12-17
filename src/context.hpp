@@ -7,14 +7,14 @@
 
 class Context {
  private:
-  GLsizei window_width_ = 1280;
-  GLsizei window_height_ = 720;
-
   std::optional<Shader> depth_map_shader_;
 
  public:
-  const glm::mat4 clock_position_ = glm::rotate(
+  const glm::mat4 kClockPosition = glm::rotate(
       glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0, 0.0, 0.0));
+
+  GLsizei window_width_ = 1280;
+  GLsizei window_height_ = 720;
 
   Camera camera_;
 
@@ -27,7 +27,7 @@ class Context {
   Context() : camera_(glm::vec3(0.0f, 0.0f, 0.0f)) {}
   ~Context() {}
 
-  Shader& get_depth_map_shader() { return depth_map_shader_.value(); }
+  inline Shader& get_depth_map_shader() { return depth_map_shader_.value(); }
 
   /**
    * @brief Update width and height in a Context object.
@@ -45,7 +45,7 @@ class Context {
    *
    * @return float Ratio of window width and height.
    */
-  float Ratio() { return (float)window_width_ / window_height_; }
+  inline float Ratio() { return (float)window_width_ / window_height_; }
 
   static glm::mat4 RotateEcliptic(glm::mat4 origin) {
     return glm::rotate(origin, glm::radians(-30.0f),
