@@ -27,6 +27,8 @@ class Time {
   static auto Milliseconds() {
 #ifdef _MSC_VER
     return Subseconds() / 10000;
+#elif defined(__GNUC__) && defined(__MINGW32__)
+    return Subseconds() / 1000000;
 #else
     return Subseconds();
 #endif
