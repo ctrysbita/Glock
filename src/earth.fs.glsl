@@ -25,7 +25,7 @@ void main() {
     // specular
     float strength = 0.65;
     vec3 viewDir = normalize(ViewPos - FragmentPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
+    vec3 reflectDir = reflect(lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     vec3 specular = strength * spec * lightColor;
 
