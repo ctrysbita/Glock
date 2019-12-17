@@ -36,17 +36,16 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   dial.Draw(context);
   mars.Draw(context);
   jupiter.Draw(context);
+
   // glUseProgram(0);
   // glBegin(GL_QUADS);
   // glColor3f(0.0, 0.0, 0.0);
-
   // glVertex3f(0.1, 0.1, 0.0);
   // glVertex3f(0.9, 0.1, 0.0);
   // glVertex3f(0.9, 0.9, 0.0);
   // glVertex3f(0.1, 0.9, 0.0);
   // glEnd();
-
-  glFlush();
+  // glFlush();
 }
 
 int main(int argc, char **argv) {

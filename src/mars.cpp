@@ -25,7 +25,7 @@ void Mars::Draw(Context& context) {
 
   auto view = context.camera_.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
-                                     (float)1280 / (float)720, 0.1f, 100.0f);
+                                     context.Ratio(), 0.1f, 100.0f);
   shader_.SetMat4("Model", model);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
