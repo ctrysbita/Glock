@@ -74,6 +74,8 @@ class Camera {
    * - S = Go back.
    * - A = Go left.
    * - D = Go right.
+   * - SPACE = Go up.
+   * - LEFT SHIFT = Go down.
    *
    * @param window GLFW window.
    */
@@ -92,6 +94,10 @@ class Camera {
       position_ -= right_ * movement;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
       position_ += right_ * movement;
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+      position_ -= up_ * movement;
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+      position_ += up_ * movement;
   }
 
   /**

@@ -157,7 +157,9 @@
     <ClCompile Include="src\dial.cpp" />
     <ClCompile Include="src\earth.cpp" />
     <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\jupiter.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\mars.cpp" />
     <ClCompile Include="src\sky.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,8 +167,11 @@
     <ClInclude Include="resources\models\dial.inc.h" />
     <ClInclude Include="src\camera.hpp" />
     <ClInclude Include="src\component.h" />
+    <ClInclude Include="src\context.hpp" />
     <ClInclude Include="src\dial.h" />
     <ClInclude Include="src\earth.h" />
+    <ClInclude Include="src\jupiter.h" />
+    <ClInclude Include="src\mars.h" />
     <ClInclude Include="src\shader.hpp" />
     <ClInclude Include="src\sky.h" />
     <ClInclude Include="src\time.hpp" />

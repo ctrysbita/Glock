@@ -57,6 +57,12 @@
     <ClCompile Include="src\earth.cpp">
       <Filter>sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\jupiter.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mars.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.hpp">
@@ -84,6 +90,15 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="src\time.hpp">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\jupiter.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mars.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context.hpp">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
