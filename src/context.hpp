@@ -19,11 +19,26 @@ class Context {
                                          glm::vec3(1.0, 0.0, 0.0))) {}
   ~Context() {}
 
+  /**
+   * @brief Update width and height in a Context object.
+   *
+   * @param width The new window width.
+   * @param height The new window height.
+   */
   void HandleReshape(GLsizei width, GLsizei height) {
     window_width_ = width;
     window_height_ = height;
   }
-
+  /**
+   * @brief Get the ratio of window.
+   *
+   * @return float Ratio of window width and height.
+   */
   float Ratio() { return (float)window_width_ / window_height_; }
+  /**
+   * @brief Get the initial model position matrix
+   *
+   * @return glm::mat4 the matrix object.
+   */
   glm::mat4 GetInitMat() { return global_init_mat_; }
 };
