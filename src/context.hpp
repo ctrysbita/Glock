@@ -1,6 +1,7 @@
 #pragma once
 
 #include "camera.hpp"
+#include "optional"
 #include "shader.hpp"
 #include "time.hpp"
 
@@ -8,6 +9,8 @@ class Context {
  private:
   GLsizei window_width_ = 1280;
   GLsizei window_height_ = 720;
+
+  std::optional<Shader> depth_map_shader_;
 
  public:
   const glm::mat4 clock_position_ = glm::rotate(
@@ -20,15 +23,11 @@ class Context {
   // Depth map to generate shadow texture.
   unsigned int depth_map_frame_ = 0;
   unsigned int depth_map_texture_ = 0;
-  Shader depth_map_shader_;
 
-  Context()
-      : camera_(glm::vec3(0.0f, 0.0f, 0.0f)),
-        depth_map_shader_("src/depth.vs.glsl", "src/depth.vs.glsl") {
-    // Init depth map frame buffer and texture.
-    // InitDepthMap();
-  }
+  Context() : camera_(glm::vec3(0.0f, 0.0f, 0.0f)) {}
   ~Context() {}
+
+  Shader& get_depth_map_shader() { return depth_map_shader_.value(); }
 
   /**
    * @brief Update width and height in a Context object.
@@ -53,6 +52,14 @@ class Context {
                        glm::vec3(1.0f, 0.0f, 0.0f));
   }
 
+  static glm::mat4 PlanetRotate(glm::mat4 origin, float speed) {
+    return glm::rotate(
+        origin,
+        glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) *
+                           speed * 360)),
+        glm::vec3(0.0f, 1.0f, 0.0f));
+  }
+
   void InitDepthMap() {
     glGenFramebuffers(1, &depth_map_frame_);
     glGenTextures(1, &depth_map_texture_);
@@ -75,13 +82,7 @@ class Context {
     glReadBuffer(GL_NONE);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  }
 
-  static glm::mat4 PlanetRotate(glm::mat4 origin, float speed) {
-    return glm::rotate(
-        origin,
-        glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) *
-                           speed * 360)),
-        glm::vec3(0.0f, 1.0f, 0.0f));
+    depth_map_shader_.emplace(Shader("src/depth.vs.glsl", "src/depth.fs.glsl"));
   }
 };
