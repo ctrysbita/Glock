@@ -9,10 +9,7 @@ Earth::Earth()
                      "resources/textures/earth.jpg") {}
 
 void Earth::Draw(Context& context) {
-  glBindTexture(GL_TEXTURE_2D, texture_id_);
-  shader_.Use();
-  auto model = context.GetInitMat();
-
+  auto model = context.clock_position_;
   auto hour = Time::Hours() + 8;
   if (hour >= 12) hour -= 12;
   model = glm::rotate(
@@ -25,6 +22,9 @@ void Earth::Draw(Context& context) {
   auto view = context.camera_.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
                                      context.Ratio(), 0.1f, 100.0f);
+
+  glBindTexture(GL_TEXTURE_2D, texture_id_);
+  shader_.Use();
   shader_.SetMat4("Model", model);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);

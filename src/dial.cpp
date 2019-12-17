@@ -11,7 +11,7 @@ void Dial::Draw(Context& context) {
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   shader_.Use();
   // generate a new model matrix
-  auto model = context.GetInitMat();
+  auto model = context.clock_position_;
   model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
   auto view = context.camera_.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.camera_.zoom_),

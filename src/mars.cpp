@@ -9,10 +9,7 @@ Mars::Mars()
                      "resources/textures/mars.jpg") {}
 
 void Mars::Draw(Context& context) {
-  glBindTexture(GL_TEXTURE_2D, texture_id_);
-  shader_.Use();
-  auto model = context.GetInitMat();
-
+  auto model = context.clock_position_;
   model = glm::rotate(
       model,
       glm::radians(
@@ -28,6 +25,9 @@ void Mars::Draw(Context& context) {
   auto view = context.camera_.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
                                      context.Ratio(), 0.1f, 100.0f);
+
+  glBindTexture(GL_TEXTURE_2D, texture_id_);
+  shader_.Use();
   shader_.SetMat4("Model", model);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
