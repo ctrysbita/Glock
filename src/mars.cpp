@@ -19,7 +19,7 @@ void Mars::Draw(Context& context) {
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -0.6));
   model = Context::RotateEcliptic(model);
-  model = Context::PlanetRotate(model, 0.05);
+  model = Context::PlanetRotate(model, 0.05f);
   model = glm::scale(model, glm::vec3(.75, .75, .75));
 
   auto view = context.camera_.GetViewMatrix();

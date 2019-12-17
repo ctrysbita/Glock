@@ -17,7 +17,7 @@ void Earth::Draw(Context& context) {
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -0.3));
   model = Context::RotateEcliptic(model);
-  model = Context::PlanetRotate(model, 0.05);
+  model = Context::PlanetRotate(model, 0.05f);
 
   auto view = context.camera_.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.camera_.zoom_),

@@ -9,10 +9,12 @@ class Context {
   GLsizei window_height_ = 720;
 
  public:
-  Camera camera_;
-
   const glm::mat4 clock_position_ = glm::rotate(
       glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0, 0.0, 0.0));
+
+  Camera camera_;
+
+  glm::vec3 light_position_ = glm::vec3(3, 3, 3);
 
   Context() : camera_(glm::vec3(0.0f, 0.0f, 0.0f)) {}
   ~Context() {}

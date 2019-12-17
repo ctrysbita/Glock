@@ -17,7 +17,7 @@ void Jupiter::Draw(Context& context) {
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -0.9));
   model = Context::RotateEcliptic(model);
-  model = Context::PlanetRotate(model, 0.13);
+  model = Context::PlanetRotate(model, 0.13f);
   model = glm::scale(model, glm::vec3(1.75, 1.75, 1.75));
 
   auto view = context.camera_.GetViewMatrix();

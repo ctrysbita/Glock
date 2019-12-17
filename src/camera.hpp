@@ -84,7 +84,7 @@ class Camera {
     auto delta = current_time - last_keyboard_time_;
     last_keyboard_time_ = current_time;
     // Calculate moving distance from speed and delta time.
-    float movement = speed_ * delta;
+    float movement = speed_ * (float)delta;
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
       position_ += front_ * movement;
@@ -122,8 +122,8 @@ class Camera {
     last_mouse_xpos_ = xpos;
     last_mouse_ypos_ = ypos;
 
-    xoffset *= 0.1;
-    yoffset *= 0.1;
+    xoffset *= 0.1f;
+    yoffset *= 0.1f;
 
     yaw_ += xoffset;
     pitch_ += yoffset;
