@@ -4,8 +4,8 @@
 #include "time.hpp"
 
 Earth::Earth()
-    : ModelComponent("src/earth.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
-                     &vertices, sizeof(indices), indices,
+    : ModelComponent("src/sphere.vs.glsl", "src/sphere.fs.glsl",
+                     sizeof(vertices), &vertices, sizeof(indices), indices,
                      "resources/textures/earth.jpg") {}
 
 void Earth::Draw(Context& context) {

@@ -4,8 +4,8 @@
 #include "time.hpp"
 
 Jupiter::Jupiter()
-    : ModelComponent("src/earth.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
-                     &vertices, sizeof(indices), indices,
+    : ModelComponent("src/sphere.vs.glsl", "src/sphere.fs.glsl",
+                     sizeof(vertices), &vertices, sizeof(indices), indices,
                      "resources/textures/jupiter.jpg") {}
 
 void Jupiter::Draw(Context& context) {

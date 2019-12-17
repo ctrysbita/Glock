@@ -11,6 +11,7 @@ class Dial : public ModelComponent {
   Dial();
 
   virtual ~Dial() {}
+
   /**
    * @brief Draw a clock dial.
    *

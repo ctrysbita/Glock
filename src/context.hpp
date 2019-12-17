@@ -16,7 +16,13 @@ class Context {
 
   glm::vec3 light_position_ = glm::vec3(3, 3, 3);
 
-  Context() : camera_(glm::vec3(0.0f, 0.0f, 0.0f)) {}
+  unsigned int depth_map_frame_ = 0;
+  unsigned int depth_map_texture_ = 0;
+
+  Context() : camera_(glm::vec3(0.0f, 0.0f, 0.0f)) {
+    // Init depth map frame buffer and texture.
+    InitDepthMap();
+  }
   ~Context() {}
 
   /**
@@ -40,6 +46,30 @@ class Context {
   static glm::mat4 RotateEcliptic(glm::mat4 origin) {
     return glm::rotate(origin, glm::radians(-30.0f),
                        glm::vec3(1.0f, 0.0f, 0.0f));
+  }
+
+  void InitDepthMap() {
+    glGenFramebuffers(1, &depth_map_frame_);
+    glGenTextures(1, &depth_map_texture_);
+
+    glBindTexture(GL_TEXTURE_2D, depth_map_texture_);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0,
+                 GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    // Attach depth texture as FBO's depth buffer.
+    glBindFramebuffer(GL_FRAMEBUFFER, depth_map_frame_);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
+                           depth_map_texture_, 0);
+
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
   }
 
   static glm::mat4 PlanetRotate(glm::mat4 origin, float speed) {

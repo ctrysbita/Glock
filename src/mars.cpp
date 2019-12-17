@@ -4,8 +4,8 @@
 #include "time.hpp"
 
 Mars::Mars()
-    : ModelComponent("src/earth.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
-                     &vertices, sizeof(indices), indices,
+    : ModelComponent("src/sphere.vs.glsl", "src/sphere.fs.glsl",
+                     sizeof(vertices), &vertices, sizeof(indices), indices,
                      "resources/textures/mars.jpg") {}
 
 void Mars::Draw(Context& context) {
