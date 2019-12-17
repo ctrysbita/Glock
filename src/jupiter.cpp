@@ -10,7 +10,8 @@ Jupiter::Jupiter()
 
 glm::mat4 Jupiter::ModelTransformation(Context& context) {
   auto model = context.kClockPosition;
-  context.jupiter_pos_ = glm::vec2(0.0f, 0.0f);
+  context.jupiter_pos_ = glm::vec3(0.0f, 0.0f, 0.0f);
+  context.jupiter_velocity_ = glm::vec3(1.0f, 0.0f, 0.0f);
   model = glm::rotate(
       model,
       glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) /

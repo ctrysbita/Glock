@@ -31,13 +31,19 @@
     <None Include="src\sky.vs.glsl">
       <Filter>sources</Filter>
     </None>
-    <None Include="src\earth.vs.glsl">
-      <Filter>sources</Filter>
-    </None>
-    <None Include="src\earth.fs.glsl">
-      <Filter>sources</Filter>
-    </None>
     <None Include="src\dial.vs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\particle.fs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\particle.vs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\sphere.fs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\sphere.vs.glsl">
       <Filter>sources</Filter>
     </None>
   </ItemGroup>

@@ -8,6 +8,7 @@
 #include "jupiter.h"
 #include "mars.h"
 #include "sky.h"
+#include "particle.h"
 
 Context context;
 
@@ -25,7 +26,7 @@ void MouseScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
 }
 
 void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
-             Jupiter &jupiter) {
+             Jupiter &jupiter, ParticleGenerator &particle) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -49,6 +50,9 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   earth.Draw(context);
   mars.Draw(context);
   jupiter.Draw(context);
+  particle.Update(0.01, context, 10);
+  particle.Draw(context);
+  
 
   // glUseProgram(0);
   // glBegin(GL_QUADS);
@@ -109,12 +113,13 @@ int main(int argc, char **argv) {
   auto dial = Dial();
   auto mars = Mars();
   auto jupiter = Jupiter();
+  auto particle = ParticleGenerator("resources/textures/particle.jpg", 500);
 
   while (!glfwWindowShouldClose(window)) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) break;
     context.camera_.ProcessKeyboard(window);
 
-    Display(sky, earth, dial, mars, jupiter);
+    Display(sky, earth, dial, mars, jupiter, particle);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

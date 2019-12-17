@@ -148,10 +148,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="src\dial.vs.glsl" />
-    <None Include="src\earth.fs.glsl" />
-    <None Include="src\earth.vs.glsl" />
+    <None Include="src\particle.fs.glsl" />
+    <None Include="src\particle.vs.glsl" />
     <None Include="src\sky.fs.glsl" />
     <None Include="src\sky.vs.glsl" />
+    <None Include="src\sphere.fs.glsl" />
+    <None Include="src\sphere.vs.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dial.cpp" />

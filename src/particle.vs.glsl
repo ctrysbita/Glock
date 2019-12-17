@@ -5,13 +5,15 @@ out vec2 TexCoords;
 out vec4 ParticleColor;
 
 uniform mat4 projection;
-uniform vec2 offset;
+uniform vec3 offset;
 uniform vec4 color;
+uniform mat4 model;
+uniform mat4 view;
 
 void main()
 {
-    float scale = 10.0f;
+    float scale = .01f;
     TexCoords = vertex.zw;
     ParticleColor = color;
-    gl_Position = projection * vec4((vertex.xy * scale) + offset, 0.0, 1.0);
+    gl_Position = projection * view * model * vec4((vertex.xy * scale) + offset.xy, offset.z, 1.0);
 }

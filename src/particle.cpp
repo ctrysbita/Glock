@@ -1,21 +1,21 @@
 #include "particle.h"
 
-ParticleGenerator::ParticleGenerator(Shader shader, const char *t_path,
-                                     GLuint amount)
-    : shader(shader), amount(amount) {
+ParticleGenerator::ParticleGenerator(const char *t_path, GLuint amount)
+    : shader_("src/particle.vs.glsl", "src/particle.fs.glsl"), amount_(amount) {
   this->init();
   loadTexture(t_path);
 }
 
 void ParticleGenerator::Update(GLfloat dt, Context &context,
-                               GLuint newParticles, glm::vec2 offset) {
+                               GLuint newParticles, glm::vec3 offset) {
   // Add new particles
   for (GLuint i = 0; i < newParticles; ++i) {
     int unusedParticle = this->firstUnusedParticle();
     this->respawnParticle(this->particles[unusedParticle], context, offset);
   }
   // Update all particles
-  for (GLuint i = 0; i < this->amount; ++i) {
+  for (GLuint i = 0; i < this->amount_; ++i) {
+    dt *= ((rand() % 1000 - 500) / 1000.0 + 1);
     Particle &p = this->particles[i];
     p.Life -= dt;         // reduce life
     if (p.Life > 0.0f) {  // particle is alive, thus update
@@ -26,14 +26,22 @@ void ParticleGenerator::Update(GLfloat dt, Context &context,
 }
 
 // Render all particles
-void ParticleGenerator::Draw() {
+void ParticleGenerator::Draw(Context & context) {
+  auto model = context.kClockPosition;
+  model = glm::translate(model, glm::vec3(0, 0.3, 0.0));
+  auto view = context.camera_.GetViewMatrix();
+  auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
+    context.Ratio(), 0.1f, 100.0f);
   // Use additive blending to give it a 'glow' effect
   glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-  this->shader.Use();
+  this->shader_.Use();
   for (Particle particle : this->particles) {
     if (particle.Life > 0.0f) {
-      this->shader.SetVec2("offset", particle.Position);
-      this->shader.SetVec4("color", particle.Color);
+      this->shader_.SetVec3("offset", particle.Position);
+      this->shader_.SetVec4("color", particle.Color);
+      this->shader_.SetMat4("projection", projection);
+      shader_.SetMat4("model", model);
+      shader_.SetMat4("view", view);
       glBindTexture(GL_TEXTURE_2D, texture_id_);
       glBindVertexArray(this->VAO);
       glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -65,7 +73,7 @@ void ParticleGenerator::init() {
   glBindVertexArray(0);
 
   // Create this->amount default particle instances
-  for (GLuint i = 0; i < this->amount; ++i)
+  for (GLuint i = 0; i < this->amount_; ++i)
     this->particles.push_back(Particle());
 }
 
@@ -99,7 +107,7 @@ GLuint lastUsedParticle = 0;
 GLuint ParticleGenerator::firstUnusedParticle() {
   // First search from last used particle, this will usually return almost
   // instantly
-  for (GLuint i = lastUsedParticle; i < this->amount; ++i) {
+  for (GLuint i = lastUsedParticle; i < this->amount_; ++i) {
     if (this->particles[i].Life <= 0.0f) {
       lastUsedParticle = i;
       return i;
@@ -119,10 +127,14 @@ GLuint ParticleGenerator::firstUnusedParticle() {
 }
 
 void ParticleGenerator::respawnParticle(Particle &particle, Context &context,
-                                        glm::vec2 offset) {
-  GLfloat random = ((rand() % 100) - 50) / 10.0f;
+                                        glm::vec3 offset) {
+  GLfloat random = ((rand() % 100) - 50) / 1000.0f;
   GLfloat rColor = 0.5 + ((rand() % 100) / 100.0f);
-  particle.Position = context.jupiter_pos_ + random + offset;
+  particle.Position.x = context.jupiter_pos_.x + random + offset.x;
+  random = ((rand() % 100) - 50) / 1000.0f;
+  particle.Position.y = context.jupiter_pos_.y + random + offset.y;
+  random = ((rand() % 100) - 50) / 1000.0f;
+  particle.Position.z = context.jupiter_pos_.z + random + offset.z;
   particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
   particle.Life = 1.0f;
   particle.Velocity = context.jupiter_velocity_ * 0.1f;
