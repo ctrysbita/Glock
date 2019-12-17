@@ -29,8 +29,6 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // glMatrixMode(GL_MODELVIEW);
-
   sky.Draw(context);
   earth.Draw(context);
   dial.Draw(context);

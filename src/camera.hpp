@@ -8,12 +8,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 
-// Default values.
+// Default values of camera.
 constexpr float kDefaultCameraYaw = -90.0;
 constexpr float kDefaultCameraPitch = 0.0;
 constexpr float kDefaultCameraSpeed = 1.5;
 constexpr float kDefaultCameraZoom = 45.0;
 
+/**
+ * @brief Utilities for camera controlling.
+ */
 class Camera {
  private:
   double last_keyboard_time_ = 0;
@@ -21,15 +24,16 @@ class Camera {
   float last_mouse_xpos_;
   float last_mouse_ypos_;
 
-  // Calculates the front vector from the Camera's (updated) Euler Angles
+  /**
+   * @brief Calculates the front, right and up vector from the Camera's
+   * euler angles.
+   */
   void UpdateCamera() {
-    // Calculate the new Front vector
     glm::vec3 front;
     front.x = cos(glm::radians(yaw_)) * cos(glm::radians(pitch_));
     front.y = sin(glm::radians(pitch_));
     front.z = sin(glm::radians(yaw_)) * cos(glm::radians(pitch_));
     front_ = glm::normalize(front);
-    // Also re-calculate the Right and Up vector
     right_ = glm::normalize(glm::cross(front_, world_up_));
     up_ = glm::normalize(glm::cross(right_, front_));
   }
@@ -54,15 +58,30 @@ class Camera {
     UpdateCamera();
   }
 
+  /**
+   * @brief Get view matrix of current camera.
+   *
+   * @return glm::mat4 View matrix of current camera.
+   */
   glm::mat4 GetViewMatrix() {
     return glm::lookAt(position_, position_ + front_, up_);
   }
 
+  /**
+   * @brief Process keyboard acitvity.
+   *
+   * - W = Go ahead.
+   * - S = Go back.
+   * - A = Go left.
+   * - D = Go right.
+   *
+   * @param window GLFW window.
+   */
   void ProcessKeyboard(GLFWwindow *window) {
     auto current_time = glfwGetTime();
     auto delta = current_time - last_keyboard_time_;
     last_keyboard_time_ = current_time;
-    // calculate moving distance
+    // Calculate moving distance from speed and delta time.
     float movement = speed_ * delta;
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -75,6 +94,13 @@ class Camera {
       position_ += right_ * movement;
   }
 
+  /**
+   * @brief Process mouse movement event.
+   *
+   * @param xpos X position of mouse.
+   * @param ypos Y position of mouse.
+   * @param constrain_pitch Enable pitch boundary to prevent flip of screen.
+   */
   void ProcessMouseMovement(float xpos, float ypos,
                             bool constrain_pitch = true) {
     if (!mouse_moved_) {
@@ -105,6 +131,11 @@ class Camera {
     UpdateCamera();
   }
 
+  /**
+   * @brief Process mouse scroll event and change zoom of camera.
+   *
+   * @param yoffset Offset of scroll.
+   */
   void ProcessMouseScroll(float yoffset) {
     if (zoom_ >= 1.0f && zoom_ <= 45.0f) zoom_ -= yoffset;
     if (zoom_ <= 1.0f) zoom_ = 1.0f;

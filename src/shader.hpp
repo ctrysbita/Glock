@@ -8,11 +8,20 @@
 #include <sstream>
 #include <string>
 
+/**
+ * @brief Utilities for shader management.
+ */
 class Shader {
  private:
   unsigned int shader_id_;
 
-  void CheckCompileErrors(GLuint shader, std::string type) {
+  /**
+   * @brief Check whether there is a compilation error for shaders.
+   *
+   * @param shader The ID of shader object.
+   * @param type Type of shader. (VERTEX, FRAGMENT, PROGRAM)
+   */
+  void CheckCompileErrors(GLuint shader, std::string &&type) {
     GLint success;
     GLchar infoLog[1024];
     if (type != "PROGRAM") {
@@ -33,7 +42,14 @@ class Shader {
   }
 
  public:
+  /**
+   * @brief Construct shader object from paths.
+   *
+   * @param v_path Path of vertex shader file.
+   * @param f_path Path of fragment shader file.
+   */
   Shader(const char *v_path, const char *f_path) {
+    // Read shaders from file.
     std::string v_code_string;
     std::string f_code_string;
     std::ifstream v_file;
@@ -59,28 +75,34 @@ class Shader {
     const char *f_code = f_code_string.c_str();
 
     unsigned int vertex, fragment;
-    // vertex shader
+    // Vertex shader.
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &v_code, NULL);
     glCompileShader(vertex);
     CheckCompileErrors(vertex, "VERTEX");
-    // fragment Shader
+    // Fragment shader.
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, 1, &f_code, NULL);
     glCompileShader(fragment);
     CheckCompileErrors(fragment, "FRAGMENT");
-    // shader Program
+    // Shader program.
     shader_id_ = glCreateProgram();
     glAttachShader(shader_id_, vertex);
     glAttachShader(shader_id_, fragment);
     glLinkProgram(shader_id_);
     CheckCompileErrors(shader_id_, "PROGRAM");
-
+    // After shader program has been compiled, shaders can be destroyed safely.
     glDeleteShader(vertex);
     glDeleteShader(fragment);
   }
 
+  /**
+   * @brief Tell OpenGL to use current shader.
+   */
   void Use() const { glUseProgram(shader_id_); }
+
+  // Functions below are used to set the value of a uniform object in shader
+  // program.
 
   void SetBool(const std::string &name, bool value) const {
     glUniform1i(glGetUniformLocation(shader_id_, name.c_str()), (int)value);
