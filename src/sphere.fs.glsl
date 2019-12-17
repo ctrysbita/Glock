@@ -10,7 +10,7 @@ uniform sampler2D Texture;
 uniform vec3 ViewPos;
 
 void main() {
-    vec3 lightPos = vec3(3,3,3);
+    vec3 lightPos = vec3(2,2,2);
     vec3 textureColor = texture(Texture, vec2(UV.x, 1 - UV.y)).rgb;
 
     // ambient

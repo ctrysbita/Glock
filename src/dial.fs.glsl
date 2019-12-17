@@ -22,17 +22,15 @@ float ShadowCalculation() {
     float currentDepth = projCoords.z;
     // calculate bias (based on depth map resolution and slope)
     vec3 normal = normalize(Normal);
-    vec3 lightDir = normalize(vec3(3,3,3) - FragmentPos);
+    vec3 lightDir = normalize(vec3(2,2,2) - FragmentPos);
     float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
     // check whether current frag pos is in shadow
     // float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
     // PCF
     float shadow = 0.0;
     vec2 texelSize = 1.0 / textureSize(ShadowMap, 0);
-    for(int x = -1; x <= 1; ++x)
-    {
-        for(int y = -1; y <= 1; ++y)
-        {
+    for(int x = -1; x <= 1; ++x) {
+        for(int y = -1; y <= 1; ++y) {
             float pcfDepth = texture(ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
             shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;        
         }    
@@ -47,7 +45,7 @@ float ShadowCalculation() {
 }
 
 void main() {
-    vec3 lightPos = vec3(3,3,3);
+    vec3 lightPos = vec3(2,2,2);
     vec3 textureColor = texture(Texture, vec2(UV.x, UV.y)).rgb;
 
     // ambient

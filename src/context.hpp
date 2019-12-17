@@ -18,7 +18,7 @@ class Context {
 
   Camera camera_;
 
-  glm::vec3 light_position_ = glm::vec3(3.0f, 3.0f, 3.0f);
+  glm::vec3 light_position_ = glm::vec3(2.0f, 2.0f, 2.0f);
 
   // Depth map to generate shadow texture.
   unsigned int depth_map_frame_ = 0;
