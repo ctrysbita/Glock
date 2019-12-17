@@ -18,6 +18,7 @@ void Dial::Draw(Camera &camera) {
   shader_.SetMat4("Model", model);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
+  shader_.SetVec3("ViewPos", camera.position_);
   auto aa = glGetError();
   glBindVertexArray(vao_);
   glDrawElements(GL_TRIANGLES, 11904, GL_UNSIGNED_INT, 0);
