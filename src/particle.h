@@ -1,13 +1,15 @@
+#pragma once
 #include <glad/glad.h>
 #include <stb_image.h>
 #include <glm/glm.hpp>
 #include <vector>
 
-#include "context.h"
-#include "shader.h"
+#include "context.hpp"
+#include "shader.hpp"
 
 // Represents a single particle and its state
 class Particle {
+public:
   glm::vec2 Position, Velocity;
   glm::vec4 Color;
   GLfloat Life;
@@ -20,10 +22,9 @@ class Particle {
 class ParticleGenerator {
  public:
   // Constructor
-  ParticleGenerator(Shader shader, Texture2D texture, GLuint amount);
+  ParticleGenerator(Shader shader, const char* t_path, GLuint amount);
   // Update all particles
-  void Update(GLfloat dt, GameObject &object, GLuint newParticles,
-              glm::vec2 offset = glm::vec2(0.0f, 0.0f));
+  void Update(GLfloat dt, Context& context, GLuint newParticles, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
   // Render all particles
   void Draw();
 
@@ -38,13 +39,10 @@ class ParticleGenerator {
   // Initializes buffer and vertex attributes
   void init();
 
-  void loadTexture(cosnt char *t_path);
+  void loadTexture(const char *t_path);
   // Returns the first Particle index that's currently unused e.g. Life <= 0.0f
   // or 0 if no particle is currently inactive
   GLuint firstUnusedParticle();
   // Respawns particle
-  void respawnParticle(Particle &particle, GameObject &object,
-                       glm::vec2 offset = glm::vec2(0.0f, 0.0f));
+  void respawnParticle(Particle& particle, Context& context, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
 };
-
-#endif

@@ -63,6 +63,9 @@
     <ClCompile Include="src\mars.cpp">
       <Filter>sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\particle.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.hpp">
@@ -99,6 +102,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="src\context.hpp">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particle.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

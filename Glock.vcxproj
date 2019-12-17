@@ -160,6 +160,7 @@
     <ClCompile Include="src\jupiter.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mars.cpp" />
+    <ClCompile Include="src\particle.cpp" />
     <ClCompile Include="src\sky.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +173,7 @@
     <ClInclude Include="src\earth.h" />
     <ClInclude Include="src\jupiter.h" />
     <ClInclude Include="src\mars.h" />
+    <ClInclude Include="src\particle.h" />
     <ClInclude Include="src\shader.hpp" />
     <ClInclude Include="src\sky.h" />
     <ClInclude Include="src\time.hpp" />
