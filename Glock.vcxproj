@@ -147,6 +147,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="src\depth.fs.glsl" />
+    <None Include="src\depth.vs.glsl" />
+    <None Include="src\dial.fs.glsl" />
     <None Include="src\dial.vs.glsl" />
     <None Include="src\particle.fs.glsl" />
     <None Include="src\particle.vs.glsl" />

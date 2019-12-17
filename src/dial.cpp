@@ -30,7 +30,10 @@ void Dial::Draw(Context& context) {
   shader_.SetMat4("Projection", projection);
   shader_.SetVec3("ViewPos", context.camera_.position_);
   shader_.SetMat4("LightSpace", light_space);
+  shader_.SetInt("Texture", 0);
+  shader_.SetInt("ShadowMap", 1);
 
+  glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   glBindVertexArray(vao_);
   glDrawElements(GL_TRIANGLES, 2682, GL_UNSIGNED_INT, 0);

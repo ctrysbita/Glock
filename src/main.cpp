@@ -7,10 +7,40 @@
 #include "earth.h"
 #include "jupiter.h"
 #include "mars.h"
-#include "sky.h"
 #include "particle.h"
+#include "sky.h"
 
 Context context;
+
+// renderQuad() renders a 1x1 XY quad in NDC
+// -----------------------------------------
+unsigned int quadVAO = 0;
+unsigned int quadVBO;
+void renderQuad() {
+  if (quadVAO == 0) {
+    float quadVertices[] = {
+        // positions        // texture Coords
+        -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,  1.0f, 0.0f, 1.0f, 1.0f, 1.0f,  -1.0f, 0.0f, 1.0f, 0.0f,
+    };
+    // setup plane VAO
+    glGenVertexArrays(1, &quadVAO);
+    glGenBuffers(1, &quadVBO);
+    glBindVertexArray(quadVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices,
+                 GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
+                          (void *)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
+                          (void *)(3 * sizeof(float)));
+  }
+  glBindVertexArray(quadVAO);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  glBindVertexArray(0);
+}
 
 void Reshape(GLFWwindow *window, GLsizei width, GLsizei height) {
   glViewport(0, 0, width, height);
@@ -32,6 +62,7 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
 
   glViewport(0, 0, 1024, 1024);
   glBindFramebuffer(GL_FRAMEBUFFER, context.depth_map_frame_);
+  glClear(GL_DEPTH_BUFFER_BIT);
 
   dial.DrawDepthMap(context);
   earth.DrawDepthMap(context);
@@ -52,7 +83,6 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   jupiter.Draw(context);
   particle.Update(0.01, context, 10);
   particle.Draw(context);
-  
 
   // glUseProgram(0);
   // glBegin(GL_QUADS);
@@ -102,8 +132,6 @@ int main(int argc, char **argv) {
 
   // Initialization of GL.
   glEnable(GL_DEPTH_TEST);
-  glShadeModel(GL_SMOOTH);
-  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
   context.InitDepthMap();
 

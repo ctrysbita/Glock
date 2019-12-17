@@ -31,6 +31,21 @@
     <None Include="src\sky.vs.glsl">
       <Filter>sources</Filter>
     </None>
+    <None Include="src\depth.fs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\depth.vs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\sphere.fs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\sphere.vs.glsl">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="src\dial.fs.glsl">
+      <Filter>sources</Filter>
+    </None>
     <None Include="src\dial.vs.glsl">
       <Filter>sources</Filter>
     </None>
@@ -38,12 +53,6 @@
       <Filter>sources</Filter>
     </None>
     <None Include="src\particle.vs.glsl">
-      <Filter>sources</Filter>
-    </None>
-    <None Include="src\sphere.fs.glsl">
-      <Filter>sources</Filter>
-    </None>
-    <None Include="src\sphere.vs.glsl">
       <Filter>sources</Filter>
     </None>
   </ItemGroup>
