@@ -29,6 +29,8 @@ class Time {
     return Subseconds() / 10000;
 #elif defined(__GNUC__) && defined(__MINGW32__)
     return Subseconds() / 1000000;
+#elif defined(__APPLE__)
+    return Subseconds() / 1000;
 #else
     return Subseconds();
 #endif

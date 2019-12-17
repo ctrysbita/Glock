@@ -352,3 +352,4 @@ MigrationBackup/
 main
 *.exe
 *.jpg
+.DS_Store
