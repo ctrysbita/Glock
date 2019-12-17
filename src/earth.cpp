@@ -19,6 +19,7 @@ void Earth::Draw(Context& context) {
       model, glm::radians(float(-(hour + Time::Minutes() / 60.0) / 12.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -0.45));
+  model = glm::rotate(model, glm::radians(-30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
   auto view = context.camera_.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.camera_.zoom_),

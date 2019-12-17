@@ -15,8 +15,8 @@ class Context {
       : camera_(glm::vec3(0.0f, 0.0f, 0.0f)),
         window_width_(1280),
         window_height_(720),
-        global_rotation_mat_(glm::rotate(glm::mat4(1.0f), glm::radians(90.0f),
-                                         glm::vec3(1.0, 0.0, 0.0))) {}
+        global_init_mat_(glm::rotate(glm::mat4(1.0f), glm::radians(90.0f),
+                                     glm::vec3(1.0, 0.0, 0.0))) {}
   ~Context() {}
 
   /**

@@ -21,6 +21,7 @@ void Mars::Draw(Context& context) {
                 60.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -0.55));
+  model = glm::rotate(model, glm::radians(-30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
   model = glm::scale(model, glm::vec3(.75, .75, .75));
 
   auto view = context.camera_.GetViewMatrix();
