@@ -24,6 +24,11 @@ class Context {
   unsigned int depth_map_frame_ = 0;
   unsigned int depth_map_texture_ = 0;
 
+  glm::vec2 earth_pos_;
+  glm::vec2 mars_pos_;
+  glm::vec2 jupiter_pos_;
+  glm::vec2 jupiter_velocity_;
+
   Context() : camera_(glm::vec3(0.0f, 0.0f, 0.0f)) {}
   ~Context() {}
 
