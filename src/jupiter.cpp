@@ -1,14 +1,14 @@
-#include "jupyter.h"
+#include "jupiter.h"
 
 #include "../resources/models/sphere.inc.h"
 #include "time.hpp"
 
-Jupyter::Jupyter()
+Jupiter::Jupiter()
     : ModelComponent("src/earth.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
                      &vertices, sizeof(indices), indices,
-                     "resources/textures/earth.jpg") {}
+                     "resources/textures/jupiter.jpg") {}
 
-void Jupyter::Draw(Camera &camera) {
+void Jupiter::Draw(Camera &camera) {
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   shader_.Use();
   auto model = glm::mat4(1.0f);
@@ -18,6 +18,7 @@ void Jupyter::Draw(Camera &camera) {
       model, glm::radians(float(-(hour + Time::Minutes() / 60.0) / 12.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.2, -0.5));
+  model = glm::scale(model, glm::vec3(1.75, 1.75, 1.75));
 
   auto view = camera.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(camera.zoom_),

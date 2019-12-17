@@ -2,11 +2,11 @@
 
 #include "component.h"
 
-class Jupyter : public ModelComponent {
+class Jupiter : public ModelComponent {
  public:
-  Jupyter();
+  Jupiter();
 
-  virtual ~Jupyter() {}
+  virtual ~Jupiter() {}
 
   void Draw(Camera& camera) override;
 };

@@ -6,7 +6,7 @@
 Mars::Mars()
     : ModelComponent("src/earth.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
                      &vertices, sizeof(indices), indices,
-                     "resources/textures/earth.jpg") {}
+                     "resources/textures/mars.jpg") {}
 
 void Mars::Draw(Camera &camera) {
   glBindTexture(GL_TEXTURE_2D, texture_id_);
@@ -19,6 +19,7 @@ void Mars::Draw(Camera &camera) {
           float(-(Time::Minutes() + Time::Seconds() / 60.0) / 60.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.2, -0.6));
+  model = glm::scale(model, glm::vec3(.75, .75, .75));
 
   auto view = camera.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(camera.zoom_),

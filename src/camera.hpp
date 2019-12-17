@@ -11,7 +11,7 @@
 // Default values.
 constexpr float kDefaultCameraYaw = -90.0;
 constexpr float kDefaultCameraPitch = 0.0;
-constexpr float kDefaultCameraSpeed = 2.5;
+constexpr float kDefaultCameraSpeed = 1.5;
 constexpr float kDefaultCameraZoom = 45.0;
 
 class Camera {
