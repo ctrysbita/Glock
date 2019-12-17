@@ -15,5 +15,5 @@ void main() {
     FragmentPos = vec3(Model * vec4(pos, 1.0));
     Normal = mat3(transpose(inverse(Model))) * normal;
     UV = uv;
-    gl_Position = Projection * View * Model * vec4(pos / 30, 1.0);
+    gl_Position = Projection * View * Model * vec4(pos / 60, 1.0);
 }

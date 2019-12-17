@@ -20,7 +20,7 @@ void main() {
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragmentPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = diff * texture(Texture, vec2(UV.x, 1 - UV.y)).rgb;
+    vec3 diffuse = diff * texture(Texture, vec2(UV.x, UV.y)).rgb;
 
     // specular
     float strength = 0.65;

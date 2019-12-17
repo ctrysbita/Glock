@@ -5,6 +5,8 @@
 #include "camera.hpp"
 #include "dial.h"
 #include "earth.h"
+#include "jupyter.h"
+#include "mars.h"
 #include "sky.h"
 
 Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -21,7 +23,8 @@ void MouseScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
   camera.ProcessMouseScroll(yoffset);
 }
 
-void Display(SkyBox &sky, Earth &earth, Dial &dial) {
+void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
+             Jupyter &jupyter) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -30,7 +33,8 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial) {
   sky.Draw(camera);
   earth.Draw(camera);
   dial.Draw(camera);
-
+  mars.Draw(camera);
+  jupyter.Draw(camera);
   // glUseProgram(0);
   // glBegin(GL_QUADS);
   // glColor3f(0.0, 0.0, 0.0);
@@ -88,12 +92,14 @@ int main(int argc, char **argv) {
   sky.LoadCubeMap();
   auto earth = Earth();
   auto dial = Dial();
+  auto mars = Mars();
+  auto jupyter = Jupyter();
 
   while (!glfwWindowShouldClose(window)) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) break;
     camera.ProcessKeyboard(window);
 
-    Display(sky, earth, dial);
+    Display(sky, earth, dial, mars, jupyter);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

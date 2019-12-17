@@ -1,24 +1,24 @@
-#include "earth.h"
+#include "mars.h"
 
 #include "../resources/models/sphere.inc.h"
 #include "time.hpp"
 
-Earth::Earth()
+Mars::Mars()
     : ModelComponent("src/earth.vs.glsl", "src/earth.fs.glsl", sizeof(vertices),
                      &vertices, sizeof(indices), indices,
                      "resources/textures/earth.jpg") {}
 
-void Earth::Draw(Camera &camera) {
+void Mars::Draw(Camera &camera) {
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   shader_.Use();
   auto model = glm::mat4(1.0f);
 
   model = glm::rotate(
       model,
-      glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) /
-                         60.0 * 360)),
+      glm::radians(
+          float(-(Time::Minutes() + Time::Seconds() / 60.0) / 60.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
-  model = glm::translate(model, glm::vec3(0, 0.2, -0.75));
+  model = glm::translate(model, glm::vec3(0, 0.2, -0.6));
 
   auto view = camera.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(camera.zoom_),
