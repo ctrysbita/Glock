@@ -12,12 +12,13 @@ void Jupiter::Draw(Camera &camera) {
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   shader_.Use();
   auto model = glm::mat4(1.0f);
-  auto hour = Time::Hours() + 8;
-  if (hour >= 12) hour -= 12;
+
   model = glm::rotate(
-      model, glm::radians(float(-(hour + Time::Minutes() / 60.0) / 12.0 * 360)),
+      model,
+      glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) /
+                         60.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
-  model = glm::translate(model, glm::vec3(0, 0.2, -0.5));
+  model = glm::translate(model, glm::vec3(0, 0.3, -0.85));
   model = glm::scale(model, glm::vec3(1.75, 1.75, 1.75));
 
   auto view = camera.GetViewMatrix();

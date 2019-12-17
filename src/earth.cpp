@@ -13,12 +13,12 @@ void Earth::Draw(Camera &camera) {
   shader_.Use();
   auto model = glm::mat4(1.0f);
 
+  auto hour = Time::Hours() + 8;
+  if (hour >= 12) hour -= 12;
   model = glm::rotate(
-      model,
-      glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) /
-                         60.0 * 360)),
+      model, glm::radians(float(-(hour + Time::Minutes() / 60.0) / 12.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
-  model = glm::translate(model, glm::vec3(0, 0.2, -0.75));
+  model = glm::translate(model, glm::vec3(0, 0.3, -0.45));
 
   auto view = camera.GetViewMatrix();
   auto projection = glm::perspective(glm::radians(camera.zoom_),

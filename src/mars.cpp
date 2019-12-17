@@ -16,9 +16,11 @@ void Mars::Draw(Camera &camera) {
   model = glm::rotate(
       model,
       glm::radians(
-          float(-(Time::Minutes() + Time::Seconds() / 60.0) / 60.0 * 360)),
+          float(-(Time::Minutes() +
+                  (Time::Seconds() + Time::Milliseconds() / 1000.0) / 60.0) /
+                60.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
-  model = glm::translate(model, glm::vec3(0, 0.2, -0.6));
+  model = glm::translate(model, glm::vec3(0, 0.3, -0.55));
   model = glm::scale(model, glm::vec3(.75, .75, .75));
 
   auto view = camera.GetViewMatrix();
