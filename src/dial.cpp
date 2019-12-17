@@ -21,8 +21,7 @@ void Dial::Draw(Context& context) {
 
   auto light_view = glm::lookAt(context.light_position_, glm::vec3(0.0f),
                                 glm::vec3(0.0, 1.0, 0.0));
-  auto light_projection =
-      glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
+  auto light_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 10.0f);
   auto light_space = light_projection * light_view;
   // Pass information to shader.
   shader_.Use();
@@ -42,8 +41,7 @@ void Dial::DrawDepthMap(Context& context) {
   auto model = ModelTransformation(context);
   auto light_view = glm::lookAt(context.light_position_, glm::vec3(0.0f),
                                 glm::vec3(0.0, 1.0, 0.0));
-  auto light_projection =
-      glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
+  auto light_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 10.0f);
   auto light_space = light_projection * light_view;
 
   context.get_depth_map_shader().Use();

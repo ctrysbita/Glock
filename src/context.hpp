@@ -18,7 +18,7 @@ class Context {
 
   Camera camera_;
 
-  glm::vec3 light_position_ = glm::vec3(3, 3, 3);
+  glm::vec3 light_position_ = glm::vec3(3.0f, 3.0f, 3.0f);
 
   // Depth map to generate shadow texture.
   unsigned int depth_map_frame_ = 0;
@@ -29,7 +29,7 @@ class Context {
   glm::vec3 jupiter_pos_;
   glm::vec3 jupiter_velocity_;
 
-  Context() : camera_(glm::vec3(0.0f, 0.0f, 0.0f)) {}
+  Context() : camera_(glm::vec3(0.0f, 0.0f, 3.0f)) {}
   ~Context() {}
 
   inline Shader& get_depth_map_shader() { return depth_map_shader_.value(); }
