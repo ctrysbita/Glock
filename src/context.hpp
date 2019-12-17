@@ -1,6 +1,7 @@
 #pragma once
 
 #include "camera.hpp"
+#include "time.hpp"
 
 class Context {
  private:
@@ -41,4 +42,15 @@ class Context {
    * @return glm::mat4 the matrix object.
    */
   glm::mat4 GetInitMat() { return global_init_mat_; }
+  static glm::mat4 RotateEcliptic(glm::mat4 origin) {
+    return glm::rotate(origin, glm::radians(-30.0f),
+                       glm::vec3(1.0f, 0.0f, 0.0f));
+  }
+  static glm::mat4 PlanetRotate(glm::mat4 origin, float speed) {
+    return glm::rotate(
+        origin,
+        glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) *
+                           speed * 360)),
+        glm::vec3(0.0f, 1.0f, 0.0f));
+  }
 };
