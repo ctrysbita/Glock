@@ -8,5 +8,5 @@ class Earth : public ModelComponent {
 
   virtual ~Earth() {}
 
-  void Draw(Camera& camera) override;
+  void Draw(Context& context) override;
 };

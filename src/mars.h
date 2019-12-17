@@ -8,5 +8,5 @@ class Mars : public ModelComponent {
 
   virtual ~Mars() {}
 
-  void Draw(Camera& camera) override;
+  void Draw(Context& context) override;
 };

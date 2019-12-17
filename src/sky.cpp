@@ -55,12 +55,12 @@ void SkyBox::LoadCubeMap() {
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
-void SkyBox::Draw(Camera& camera) {
+void SkyBox::Draw(Context& context) {
   glDepthFunc(GL_LEQUAL);
 
   shader_.Use();
-  auto view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
-  auto projection = glm::perspective(glm::radians(camera.zoom_),
+  auto view = glm::mat4(glm::mat3(context.camera_.GetViewMatrix()));
+  auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
                                      (float)1280 / (float)720, 0.1f, 100.0f);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);

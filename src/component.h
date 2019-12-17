@@ -2,7 +2,7 @@
 
 #include <stb_image.h>
 
-#include "camera.hpp"
+#include "context.hpp"
 #include "shader.hpp"
 
 class ModelComponent {
@@ -77,5 +77,5 @@ class ModelComponent {
 
   Shader& get_shader() { return shader_; }
 
-  virtual void Draw(Camera& camera) = 0;
+  virtual void Draw(Context& camera) = 0;
 };

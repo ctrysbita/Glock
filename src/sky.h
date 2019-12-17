@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
-#include "camera.hpp"
+#include "context.hpp"
 #include "shader.hpp"
 
 class SkyBox {
@@ -46,5 +46,5 @@ class SkyBox {
 
   void LoadCubeMap();
 
-  void Draw(Camera& camera);
+  void Draw(Context& context);
 };

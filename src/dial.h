@@ -8,5 +8,5 @@ class Dial : public ModelComponent {
 
   virtual ~Dial() {}
 
-  void Draw(Camera& camera) override;
+  void Draw(Context& context) override;
 };

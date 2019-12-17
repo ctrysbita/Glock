@@ -2,25 +2,26 @@
 // Include glad first.
 #include <GLFW/glfw3.h>
 
-#include "camera.hpp"
+#include "context.hpp"
 #include "dial.h"
 #include "earth.h"
 #include "jupiter.h"
 #include "mars.h"
 #include "sky.h"
 
-Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
+Context context;
 
 void Reshape(GLFWwindow *window, GLsizei width, GLsizei height) {
   glViewport(0, 0, width, height);
+  context.HandleReshape(width, height);
 }
 
 void MouseMovementCallback(GLFWwindow *window, double xpos, double ypos) {
-  camera.ProcessMouseMovement(xpos, ypos);
+  context.camera_.ProcessMouseMovement(xpos, ypos);
 }
 
 void MouseScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
-  camera.ProcessMouseScroll(yoffset);
+  context.camera_.ProcessMouseScroll(yoffset);
 }
 
 void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
@@ -30,11 +31,11 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
 
   // glMatrixMode(GL_MODELVIEW);
 
-  sky.Draw(camera);
-  earth.Draw(camera);
-  dial.Draw(camera);
-  mars.Draw(camera);
-  jupiter.Draw(camera);
+  sky.Draw(context);
+  earth.Draw(context);
+  dial.Draw(context);
+  mars.Draw(context);
+  jupiter.Draw(context);
   // glUseProgram(0);
   // glBegin(GL_QUADS);
   // glColor3f(0.0, 0.0, 0.0);
@@ -97,7 +98,7 @@ int main(int argc, char **argv) {
 
   while (!glfwWindowShouldClose(window)) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) break;
-    camera.ProcessKeyboard(window);
+    context.camera_.ProcessKeyboard(window);
 
     Display(sky, earth, dial, mars, jupiter);
 

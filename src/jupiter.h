@@ -8,5 +8,5 @@ class Jupiter : public ModelComponent {
 
   virtual ~Jupiter() {}
 
-  void Draw(Camera& camera) override;
+  void Draw(Context& context) override;
 };
