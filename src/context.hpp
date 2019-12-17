@@ -1,6 +1,7 @@
 #pragma once
 
 #include "camera.hpp"
+#include "shader.hpp"
 #include "time.hpp"
 
 class Context {
@@ -16,12 +17,16 @@ class Context {
 
   glm::vec3 light_position_ = glm::vec3(3, 3, 3);
 
+  // Depth map to generate shadow texture.
   unsigned int depth_map_frame_ = 0;
   unsigned int depth_map_texture_ = 0;
+  Shader depth_map_shader_;
 
-  Context() : camera_(glm::vec3(0.0f, 0.0f, 0.0f)) {
+  Context()
+      : camera_(glm::vec3(0.0f, 0.0f, 0.0f)),
+        depth_map_shader_("src/depth.vs.glsl", "src/depth.vs.glsl") {
     // Init depth map frame buffer and texture.
-    InitDepthMap();
+    // InitDepthMap();
   }
   ~Context() {}
 

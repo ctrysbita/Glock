@@ -119,10 +119,16 @@ class ModelComponent {
    */
   Shader& get_shader() { return shader_; }
 
+  virtual glm::mat4 ModelTransformation(Context& context) {
+    return glm::mat4(1.0f);
+  }
+
   /**
    * @brief Draw component. Implement by each component.
    *
    * @param context Render context.
    */
   virtual void Draw(Context& context) = 0;
+
+  virtual void DrawDepthMap(Context& context) = 0;
 };

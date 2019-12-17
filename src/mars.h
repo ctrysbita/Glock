@@ -11,10 +11,10 @@ class Mars : public ModelComponent {
   Mars();
 
   virtual ~Mars() {}
-  /**
-   * @brief Draw a Mars object.
-   *
-   * @param context Information for model position and camera.
-   */
+
+  glm::mat4 ModelTransformation(Context& context) override;
+
   void Draw(Context& context) override;
+
+  void DrawDepthMap(Context& context) override;
 };
