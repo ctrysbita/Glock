@@ -61,6 +61,7 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  // Draw scene to depth map buffer to generate depth map.
   glViewport(0, 0, context.kDepthMapResolution, context.kDepthMapResolution);
   glBindFramebuffer(GL_FRAMEBUFFER, context.depth_map_frame);
   glClear(GL_DEPTH_BUFFER_BIT);
@@ -78,9 +79,11 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   glViewport(0, 0, context.window_width, context.window_height);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  // Use depth map as texture to render shadow in normal draw.
   glActiveTexture(GL_TEXTURE1);
   glBindTexture(GL_TEXTURE_2D, context.depth_map_texture);
 
+  // Draw scene to screen.
   sky.Draw(context);
   dial.Draw(context);
   earth.Draw(context);

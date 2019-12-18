@@ -19,10 +19,12 @@ void Dial::Draw(Context& context) {
   auto projection = glm::perspective(glm::radians(context.get_camera().zoom_),
                                      context.Ratio(), 0.1f, 100.0f);
 
+  // Calculate light view matrix for shadow.
   auto light_view = glm::lookAt(context.light_position_, glm::vec3(0.0f),
                                 glm::vec3(0.0, 1.0, 0.0));
   auto light_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 10.0f);
   auto light_space = light_projection * light_view;
+
   // Pass information to shader.
   shader_.Use();
   shader_.SetMat4("Model", model);
@@ -33,6 +35,7 @@ void Dial::Draw(Context& context) {
   shader_.SetInt("Texture", 0);
   shader_.SetInt("ShadowMap", 1);
 
+  // Bind texture and draw vertices.
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   glBindVertexArray(vao_);
@@ -47,11 +50,13 @@ void Dial::DrawDepthMap(Context& context) {
   auto light_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 10.0f);
   auto light_space = light_projection * light_view;
 
+  // Pass information to depth shader.
   context.get_depth_map_shader().Use();
   context.get_depth_map_shader().SetMat4("LightSpace", light_space);
   context.get_depth_map_shader().SetMat4("Model", model);
   context.get_depth_map_shader().SetFloat("PosFactor", 1.5f);
 
+  // Draw vertices.
   glBindVertexArray(vao_);
   glDrawElements(GL_TRIANGLES, 2682, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
