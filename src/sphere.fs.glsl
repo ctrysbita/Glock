@@ -16,15 +16,15 @@ void main() {
     vec3 textureColor = texture(Texture, vec2(UV.x, 1 - UV.y)).rgb;
     vec3 normal = normalize(Normal);
 
-    // ambient
+    // Ambient
     vec3 ambient = 0.1 * textureColor;
 
-    // diffuse
+    // Diffuse
     vec3 lightDir = normalize(lightPos - FragmentPos);
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diff * textureColor;
 
-    // specular
+    // Specular
     vec3 viewDir = normalize(ViewPos - FragmentPos);
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);

@@ -12,6 +12,7 @@ uniform mat4 View;
 uniform mat4 Projection;
 
 void main() {
+    // Calculate fragment position and normal in word space.
     FragmentPos = vec3(Model * vec4(pos / 60, 1.0));
     Normal = mat3(transpose(inverse(Model))) * normal;
     UV = uv;

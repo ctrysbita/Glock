@@ -110,7 +110,11 @@ class ModelComponent {
     if (t_path) LoadTexture(t_path);
   }
 
-  virtual ~ModelComponent() {}
+  virtual ~ModelComponent() {
+    glDeleteVertexArrays(1, &vao_);
+    glDeleteBuffers(1, &vbo_);
+    glDeleteBuffers(1, &ebo_);
+  }
 
   /**
    * @brief Get the shader used.
