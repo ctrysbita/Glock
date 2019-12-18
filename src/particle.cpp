@@ -142,6 +142,7 @@ void ParticleGenerator::respawnParticle(Particle &particle, glm::vec3 offset) {
   particle.Position.y = planet_pos_.y * random + offset.y;
   random = ((rand() % 100) - 50) / 1500.0f;
   particle.Position.x -= random;
+  random = ((rand() % 100) - 50) / 1500.0f;
   particle.Position.y -= random;
   random = ((rand() % 100) - 50) / 1500.0f;
   particle.Position.z = planet_pos_.z + random + offset.z;

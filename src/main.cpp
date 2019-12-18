@@ -82,9 +82,9 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   earth.Draw(context);
   mars.Draw(context);
   jupiter.Draw(context);
-  particle_mars.Update(0.05, context, 10);
+  particle_mars.Update(0.05, context, 3);
   particle_mars.Draw(context);
-  particle_earth.Update(0.05, context, 10);
+  particle_earth.Update(0.05, context, 3);
   particle_earth.Draw(context);
 }
 
