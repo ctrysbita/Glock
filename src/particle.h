@@ -7,48 +7,43 @@
 #include "context.hpp"
 #include "shader.hpp"
 
-// Represents a single particle and its state
+// class for particles, stores its properties.
 class Particle {
  public:
-  glm::vec3 Position, Velocity;
-  glm::vec4 Color;
-  GLfloat Life;
-  Particle() : Position(0.0f), Velocity(0.0f), Color(1.0f), Life(0.0f) {}
+  glm::vec3 position_, velocity_;
+  glm::vec4 color_;
+  GLfloat life_;
+  Particle() : position_(0.0f), velocity_(0.0f), color_(1.0f), life_(0.0f) {}
 };
 
-// ParticleGenerator acts as a container for rendering a large number of
-// particles by repeatedly spawning and updating particles and killing
-// them after a given amount of time.
+// Class for generating and organizing particles.
 class ParticleGenerator {
  public:
-  // Constructor
-  ParticleGenerator(const char* t_path, GLuint amount, GLfloat init_life,
-                    GLfloat init_velocity, glm::vec3& planet_pos);
-  // Update all particles
+  ParticleGenerator(GLuint amount, GLfloat init_life, GLfloat init_velocity,
+                    glm::vec3& planet_pos);
+  // Update states of all particles
   void Update(GLfloat dt, Context& context, GLuint newParticles,
               GLboolean respawn,
               glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
-  // Render all particles
+  // Draw all particles
   void Draw(Context& context);
   void DrawDepthMap(Context& context);
 
  private:
-  // State
-  std::vector<Particle> particles;
+  // Hold all particles
+  std::vector<Particle> particles_;
   GLuint amount_;
-  // Particle param
+  // Particle generation param
   GLfloat init_life_;
   GLfloat init_velocity_;
   // Render state
   Shader shader_;
-  unsigned int texture_id_ = 0;
-  GLuint VAO;
+  GLuint vao_;
   glm::vec3& planet_pos_;
   // Initializes buffer and vertex attributes
   void init();
 
-  void loadTexture(const char* t_path);
-  // Returns the first Particle index that's currently unused e.g. Life <= 0.0f
+  // Returns the first Particle index that's currently unused e.g. life_ <= 0.0f
   // or 0 if no particle is currently inactive
   GLuint firstUnusedParticle();
   // Respawns particle

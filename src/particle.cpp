@@ -1,7 +1,7 @@
 #include "particle.h"
 
-ParticleGenerator::ParticleGenerator(const char *t_path, GLuint amount,
-                                     GLfloat init_life, GLfloat init_velocity,
+ParticleGenerator::ParticleGenerator(GLuint amount, GLfloat init_life,
+                                     GLfloat init_velocity,
                                      glm::vec3 &planet_pos)
     : shader_("src/particle.vs.glsl", "src/particle.fs.glsl"),
       amount_(amount),
@@ -9,75 +9,73 @@ ParticleGenerator::ParticleGenerator(const char *t_path, GLuint amount,
       init_velocity_(init_velocity),
       planet_pos_(planet_pos) {
   this->init();
-  loadTexture(t_path);
 }
 
 void ParticleGenerator::Update(GLfloat dt, Context &context,
-                               GLuint newParticles, GLboolean respawn,
+                               GLuint new_particles, GLboolean respawn,
                                glm::vec3 offset) {
   // Create new particles if asked
   if (respawn) {
-    for (GLuint i = 0; i < newParticles; ++i) {
+    for (GLuint i = 0; i < new_particles; ++i) {
       int unusedParticle = this->firstUnusedParticle();
-      this->respawnParticle(this->particles[unusedParticle], offset);
+      this->respawnParticle(this->particles_[unusedParticle], offset);
     }
   }
-  // Update all particles
+  // Update all particles' state
   for (GLuint i = 0; i < this->amount_; ++i) {
-    // dt *= ((rand() % 1000 - 500) / 1000.0 + 1);
-    Particle &p = this->particles[i];
-    float z_displace = (rand() % 1000 - 500) / 500;
-    if (abs(p.Position.x) < abs(p.Velocity.x * dt) ||
-        abs(p.Position.y) < abs(p.Velocity.y * dt))
-      p.Life = 0;
+    Particle &p = this->particles_[i];
+    // kill particles which have reached the center
+    if (abs(p.position_.x) < abs(p.velocity_.x * dt) ||
+        abs(p.position_.y) < abs(p.velocity_.y * dt))
+      p.life_ = 0;
     else
-      p.Life -= dt;       // reduce life
-    if (p.Life > 0.0f) {  // particle is alive, thus update
-      p.Position -= p.Velocity * dt;
-      // p.Position.z += z_displace * dt;
-      p.Color.a -= dt * 5;
+      p.life_ -= dt;  // reduce life of particles
+    // update particle if alive
+    if (p.life_ > 0.0f) {
+      p.position_ -= p.velocity_ * dt;
+      p.color_.a -= dt * 5;
     }
   }
 }
 
-// Render all particles
+// Draw all particles
 void ParticleGenerator::Draw(Context &context) {
+  // calculate model matrix
   auto model = context.kClockPosition;
   model = glm::translate(model, glm::vec3(0, 0.3, 0.0));
   model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
+
   auto view = context.get_camera().GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.get_camera().zoom_),
                                      context.Ratio(), 0.1f, 100.0f);
-  // Use additive blending to give it a 'glow' effect
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-  this->shader_.Use();
-  for (Particle particle : this->particles) {
-    if (particle.Life > 0.0f) {
-      shader_.SetVec3("Offset", particle.Position);
+
+  shader_.Use();
+  for (Particle particle : this->particles_) {
+    // Draw particle if alive
+    if (particle.life_ > 0.0f) {
+      shader_.SetVec3("Offset", particle.position_);
       shader_.SetMat4("Projection", projection);
       shader_.SetMat4("Model", model);
       shader_.SetMat4("View", view);
-      shader_.SetVec4("Color", particle.Color);
-      glBindTexture(GL_TEXTURE_2D, texture_id_);
-      glBindVertexArray(this->VAO);
+      shader_.SetVec4("Color", particle.color_);
+      glBindVertexArray(this->vao_);
       glDrawArrays(GL_TRIANGLES, 0, 6);
       glBindVertexArray(0);
     }
   }
-  // Don't forget to reset to default blending mode
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void ParticleGenerator::init() {
-  // Set up mesh and attribute properties
-  GLuint VBO;
+  // Set up mesh property
+  GLuint vbo;
+  // Particle vertices
   GLfloat particle_quad[] = {0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
                              0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
-  glGenVertexArrays(1, &this->VAO);
-  glGenBuffers(1, &VBO);
-  glBindVertexArray(this->VAO);
-  // Fill mesh buffer
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glGenVertexArrays(1, &this->vao_);
+  glGenBuffers(1, &vbo);
+  glBindVertexArray(this->vao_);
+  // Load mesh buffer
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(particle_quad), particle_quad,
                GL_STATIC_DRAW);
   // Set mesh attributes
@@ -86,100 +84,79 @@ void ParticleGenerator::init() {
                         (GLvoid *)0);
   glBindVertexArray(0);
 
-  // Create this->amount default particle instances
+  // Initialize particles
   for (GLuint i = 0; i < this->amount_; ++i)
-    this->particles.push_back(Particle());
+    this->particles_.push_back(Particle());
 }
 
-void ParticleGenerator::loadTexture(const char *t_path) {
-  // Create texture object.
-  glGenTextures(1, &texture_id_);
-  glBindTexture(GL_TEXTURE_2D, texture_id_);
-
-  // Load image from file.
-  int width, height, channels;
-  unsigned char *data = stbi_load(t_path, &width, &height, &channels, 0);
-  if (data) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
-                 GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-  } else {
-    std::cerr << "Error: Failed to load texture." << std::endl;
-  }
-  stbi_image_free(data);
-
-  // Set parameters of texture object.
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-}
-
-// Stores the index of the last particle used (for quick access to next dead
-// particle)
-GLuint lastUsedParticle = 0;
+// Cache the last used particle for quicker search for dead particles.
+GLuint last_used_particle = 0;
 GLuint ParticleGenerator::firstUnusedParticle() {
-  // First search from last used particle, this will usually return almost
-  // instantly
-  for (GLuint i = lastUsedParticle; i < this->amount_; ++i) {
-    if (this->particles[i].Life <= 0.0f) {
-      lastUsedParticle = i;
+  // Search from last used particle first.
+  for (GLuint i = last_used_particle; i < this->amount_; ++i) {
+    if (this->particles_[i].life_ <= 0.0f) {
+      last_used_particle = i;
       return i;
     }
   }
-  // Otherwise, do a linear search
-  for (GLuint i = 0; i < lastUsedParticle; ++i) {
-    if (this->particles[i].Life <= 0.0f) {
-      lastUsedParticle = i;
+  // If failed, perform linear search
+  for (GLuint i = 0; i < last_used_particle; ++i) {
+    if (this->particles_[i].life_ <= 0.0f) {
+      last_used_particle = i;
       return i;
     }
   }
-  // All particles are taken, override the first one (note that if it repeatedly
-  // hits this case, more particles should be reserved)
-  lastUsedParticle = 0;
+  // If all particles are alive, set to the first particle.
+  last_used_particle = 0;
   return 0;
 }
 
 void ParticleGenerator::respawnParticle(Particle &particle, glm::vec3 offset) {
+  // Randomly generate particle position and color.
   GLfloat random = 1 - abs(((rand() % 1000) - 500) / 500);
   GLfloat rColor = 0.5 + ((rand() % 100) / 100.0f);
-  particle.Position.x = planet_pos_.x * random + offset.x;
-  particle.Position.y = planet_pos_.y * random + offset.y;
+  particle.position_.x = planet_pos_.x * random + offset.x;
+  particle.position_.y = planet_pos_.y * random + offset.y;
   random = ((rand() % 100) - 50) / 1500.0f;
-  particle.Position.x -= random;
+  particle.position_.x -= random;
   random = ((rand() % 100) - 50) / 1500.0f;
-  particle.Position.y -= random;
+  particle.position_.y -= random;
   random = ((rand() % 100) - 50) / 1500.0f;
-  particle.Position.z = planet_pos_.z + random + offset.z;
-  particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
-  particle.Life = init_life_;
-  particle.Velocity = glm::normalize(particle.Position) * init_velocity_;
+  particle.position_.z = planet_pos_.z + random + offset.z;
+  particle.color_ = glm::vec4(rColor, rColor, rColor, 1.0f);
+  particle.life_ = init_life_;
+  // set velocity pointing to the clock center
+  particle.velocity_ = glm::normalize(particle.position_) * init_velocity_;
 }
 
+// Implement method for generating shadow
 void ParticleGenerator::DrawDepthMap(Context &context) {
+  // calculate model matrix
   auto model = context.kClockPosition;
   model = glm::translate(model, glm::vec3(0, 0.3, 0.0));
   model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
+  // set view to light position
   auto light_view = glm::lookAt(context.light_position_, glm::vec3(0.0f),
                                 glm::vec3(0.0, 1.0, 0.0));
   auto light_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 10.0f);
   auto light_space = light_projection * light_view;
 
-  glBindVertexArray(VAO);
-  for (Particle particle : particles) {
-    if (particle.Life > 0.0f) {
+  glBindVertexArray(vao_);
+  for (Particle particle : particles_) {
+    // Draw depth buffer for every particle.
+    if (particle.life_ > 0.0f) {
       context.get_depth_map_shader().Use();
       context.get_depth_map_shader().SetMat4("LightSpace", light_space);
       context.get_depth_map_shader().SetMat4("Model", model);
       context.get_depth_map_shader().SetFloat("PosFactor", 0.016f);
       context.get_depth_map_shader().SetBool("IsParticle", true);
-      context.get_depth_map_shader().SetVec3("Offset", particle.Position);
+      context.get_depth_map_shader().SetVec3("Offset", particle.position_);
 
       glDrawArrays(GL_TRIANGLES, 0, 6);
     }
   }
 
   glBindVertexArray(0);
-
+  // restore mode for depth map shader.
   context.get_depth_map_shader().SetBool("IsParticle", false);
 }
