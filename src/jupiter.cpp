@@ -18,7 +18,7 @@ glm::mat4 Jupiter::ModelTransformation(Context& context) {
                          60.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -0.9));
-  model = Context::RotateEcliptic(model);
+  model = Context::RotateEquator(model);
   model = Context::RotatePlanet(model, 0.13f);
   model = glm::scale(model, glm::vec3(1.75, 1.75, 1.75));
   return model;

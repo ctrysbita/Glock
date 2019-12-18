@@ -49,11 +49,25 @@ class Context {
   inline Camera& get_camera() { return camera_; }
   inline Shader& get_depth_map_shader() { return depth_map_shader_.value(); }
 
-  static glm::mat4 RotateEcliptic(glm::mat4 origin) {
+  /**
+   * @brief Utility for rotating planet's equator to produce obliquity of the
+   * ecliptic.
+   *
+   * @param origin Original model matrix.
+   * @return glm::mat4 Rotated model matrix.
+   */
+  static glm::mat4 RotateEquator(glm::mat4 origin) {
     return glm::rotate(origin, glm::radians(-30.0f),
                        glm::vec3(1.0f, 0.0f, 0.0f));
   }
 
+  /**
+   * @brief Utility for rotating planet itself.
+   *
+   * @param origin Original model matrix.
+   * @param speed Rotation speed.
+   * @return glm::mat4 Rotated model matrix.
+   */
   static glm::mat4 RotatePlanet(glm::mat4 origin, float speed) {
     return glm::rotate(
         origin,

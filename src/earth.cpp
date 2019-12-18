@@ -16,7 +16,7 @@ glm::mat4 Earth::ModelTransformation(Context& context) {
       model, glm::radians(float(-(hour + Time::Minutes() / 60.0) / 12.0 * 360)),
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -0.3));
-  model = Context::RotateEcliptic(model);
+  model = Context::RotateEquator(model);
   model = Context::RotatePlanet(model, 0.05f);
   return model;
 }
