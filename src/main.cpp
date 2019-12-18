@@ -65,10 +65,12 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   glBindFramebuffer(GL_FRAMEBUFFER, context.depth_map_frame);
   glClear(GL_DEPTH_BUFFER_BIT);
 
-  dial.DrawDepthMap(context);
-  earth.DrawDepthMap(context);
-  mars.DrawDepthMap(context);
-  jupiter.DrawDepthMap(context);
+  if (context.enable_shadow_) {
+    dial.DrawDepthMap(context);
+    earth.DrawDepthMap(context);
+    mars.DrawDepthMap(context);
+    jupiter.DrawDepthMap(context);
+  }
 
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   glViewport(0, 0, context.window_width, context.window_height);
@@ -141,9 +143,17 @@ int main(int argc, char **argv) {
   auto particle_mars = ParticleGenerator("resources/textures/particle.png",
                                          500, 14.0f, 0.05f, context.mars_pos_);
 
+  double last_keyboard_event = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
     // Process keyboard events.
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) break;
+    if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS &&
+        glfwGetTime() - last_keyboard_event > 1.0) {
+      context.enable_shadow_ = !context.enable_shadow_;
+      last_keyboard_event = glfwGetTime();
+    }
+
+    // Process camera movement.
     context.get_camera().ProcessKeyboard(window);
 
     // Render scene.

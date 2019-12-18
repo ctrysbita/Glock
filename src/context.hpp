@@ -25,8 +25,11 @@ class Context {
  public:
   // The resolution of depth map. Higher resolution can provide a better shadow.
   const GLsizei kDepthMapResolution = 5120;
-  const glm::mat4 kClockPosition = glm::rotate(
-      glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0, 0.0, 0.0));
+  // Rotate the clock dial and planets to vertical position.
+  const glm::mat4 kClockPosition =
+      glm::rotate(glm::rotate(glm::mat4(1.0f), glm::radians(90.0f),
+                              glm::vec3(1.0, 0.0, 0.0)),
+                  glm::radians(3.0f), glm::vec3(0.0, 1.0, 0.0));
 
   // Public const getters.
 
@@ -39,10 +42,10 @@ class Context {
   // Public properties.
 
   glm::vec3 light_position_ = glm::vec3(2.0f, 2.0f, 2.0f);
+  bool enable_shadow_ = true;
 
   glm::vec3 earth_pos_;
   glm::vec3 mars_pos_;
-  glm::vec3 jupiter_pos_;
 
   Context() : camera_(glm::vec3(0.0f, 0.0f, 3.0f)) {}
   ~Context() {}
