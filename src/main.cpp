@@ -4,58 +4,57 @@
 
 #include "context.hpp"
 #include "dial.h"
-#include "earth.h"
-#include "jupiter.h"
-#include "mars.h"
 #include "particle.h"
+#include "planets.h"
 #include "sky.h"
 
 Context context;
 
-// renderQuad() renders a 1x1 XY quad in NDC
-// -----------------------------------------
-unsigned int quadVAO = 0;
-unsigned int quadVBO;
-void renderQuad() {
-  if (quadVAO == 0) {
-    float quadVertices[] = {
-        // positions        // texture Coords
-        -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-        1.0f,  1.0f, 0.0f, 1.0f, 1.0f, 1.0f,  -1.0f, 0.0f, 1.0f, 0.0f,
-    };
-    // setup plane VAO
-    glGenVertexArrays(1, &quadVAO);
-    glGenBuffers(1, &quadVBO);
-    glBindVertexArray(quadVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices,
-                 GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
-                          (void *)0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
-                          (void *)(3 * sizeof(float)));
-  }
-  glBindVertexArray(quadVAO);
-  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-  glBindVertexArray(0);
-}
-
+/**
+ * @brief Reshape callback to handle size change of window.
+ *
+ * @param window GLFW window.
+ * @param width New window width.
+ * @param height New window height.
+ */
 void Reshape(GLFWwindow *window, GLsizei width, GLsizei height) {
   glViewport(0, 0, width, height);
   context.HandleReshape(width, height);
 }
 
+/**
+ * @brief Callback to handle mouse movement event.
+ *
+ * @param window GLFW window.
+ * @param xpos X position of mouse.
+ * @param ypos Y position of mouse.
+ */
 void MouseMovementCallback(GLFWwindow *window, double xpos, double ypos) {
   context.get_camera().ProcessMouseMovement(xpos, ypos);
 }
 
+/**
+ * @brief Callback to handle mouse scroll event.
+ *
+ * @param window  GLFW window.
+ * @param xoffset X offset of scroll ball.
+ * @param yoffset Y offset of scroll ball.
+ */
 void MouseScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
   context.get_camera().ProcessMouseScroll(yoffset);
 }
 
-void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
+/**
+ * @brief Display function that render the whole scene.
+ *
+ * @param sky Sky box.
+ * @param dial Clock dial.
+ * @param earth Earth. (hour)
+ * @param mars Mars. (minute)
+ * @param jupiter Jupyter. (jupyter)
+ * @param particle Particle effect.
+ */
+void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
              Jupiter &jupiter, ParticleGenerator &particle) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -83,16 +82,6 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   jupiter.Draw(context);
   particle.Update(0.01, context, 10);
   particle.Draw(context);
-
-  // glUseProgram(0);
-  // glBegin(GL_QUADS);
-  // glColor3f(0.0, 0.0, 0.0);
-  // glVertex3f(0.1, 0.1, 0.0);
-  // glVertex3f(0.9, 0.1, 0.0);
-  // glVertex3f(0.9, 0.9, 0.0);
-  // glVertex3f(0.1, 0.9, 0.0);
-  // glEnd();
-  // glFlush();
 }
 
 int main(int argc, char **argv) {
@@ -133,8 +122,10 @@ int main(int argc, char **argv) {
   // Initialization of GL.
   glEnable(GL_DEPTH_TEST);
 
+  // Initialization of depth map.
   context.InitDepthMap();
 
+  // Creating objects.
   auto sky = SkyBox();
   sky.LoadCubeMap();
   auto earth = Earth();
@@ -144,10 +135,12 @@ int main(int argc, char **argv) {
   auto particle = ParticleGenerator("resources/textures/particle.jpg", 500);
 
   while (!glfwWindowShouldClose(window)) {
+    // Process keyboard events.
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) break;
     context.get_camera().ProcessKeyboard(window);
 
-    Display(sky, earth, dial, mars, jupiter, particle);
+    // Render scene.
+    Display(sky, dial, earth, mars, jupiter, particle);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

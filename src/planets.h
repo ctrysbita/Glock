@@ -4,7 +4,6 @@
 
 /**
  * @brief Class for the Earth object.
- *
  */
 class Earth : public ModelComponent {
  public:
@@ -13,15 +12,12 @@ class Earth : public ModelComponent {
   virtual ~Earth() {}
 
   glm::mat4 ModelTransformation(Context& context) override;
-
   void Draw(Context& context) override;
-
   void DrawDepthMap(Context& context) override;
 };
 
 /**
  * @brief Class for the Mars object.
- *
  */
 class Mars : public ModelComponent {
  public:
@@ -30,15 +26,12 @@ class Mars : public ModelComponent {
   virtual ~Mars() {}
 
   glm::mat4 ModelTransformation(Context& context) override;
-
   void Draw(Context& context) override;
-
   void DrawDepthMap(Context& context) override;
 };
 
 /**
  * @brief Class for the Jupiter object.
- *
  */
 class Jupiter : public ModelComponent {
  public:
@@ -47,8 +40,6 @@ class Jupiter : public ModelComponent {
   virtual ~Jupiter() {}
 
   glm::mat4 ModelTransformation(Context& context) override;
-
   void Draw(Context& context) override;
-
   void DrawDepthMap(Context& context) override;
 };
