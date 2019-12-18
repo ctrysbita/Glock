@@ -64,10 +64,8 @@ void ParticleGenerator::Draw(Context &context) {
 void ParticleGenerator::init() {
   // Set up mesh and attribute properties
   GLuint VBO;
-  GLfloat particle_quad[] = {
-      0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-
-      0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f};
+  GLfloat particle_quad[] = {0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+                             0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
   glGenVertexArrays(1, &this->VAO);
   glGenBuffers(1, &VBO);
   glBindVertexArray(this->VAO);
@@ -77,7 +75,7 @@ void ParticleGenerator::init() {
                GL_STATIC_DRAW);
   // Set mesh attributes
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat),
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
                         (GLvoid *)0);
   glBindVertexArray(0);
 
@@ -149,4 +147,23 @@ void ParticleGenerator::respawnParticle(Particle &particle, glm::vec3 offset) {
   particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
   particle.Life = init_life_;
   particle.Velocity = glm::normalize(particle.Position) * init_velocity_;
+}
+
+void ParticleGenerator::DrawDepthMap(Context &context) {
+  auto model = context.kClockPosition;
+  model = glm::translate(model, glm::vec3(0, 0.3, 0.0));
+  model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
+  auto light_view = glm::lookAt(context.light_position_, glm::vec3(0.0f),
+                                glm::vec3(0.0, 1.0, 0.0));
+  auto light_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 10.0f);
+  auto light_space = light_projection * light_view;
+
+  context.get_depth_map_shader().Use();
+  context.get_depth_map_shader().SetMat4("LightSpace", light_space);
+  context.get_depth_map_shader().SetMat4("Model", model);
+  context.get_depth_map_shader().SetFloat("PosFactor", 0.016f);
+
+  glBindVertexArray(VAO);
+  glDrawArrays(GL_TRIANGLES, 0, 6);
+  glBindVertexArray(0);
 }

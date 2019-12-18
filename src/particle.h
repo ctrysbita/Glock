@@ -29,6 +29,7 @@ class ParticleGenerator {
               glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
   // Render all particles
   void Draw(Context& context);
+  void DrawDepthMap(Context& context);
 
  private:
   // State

@@ -70,6 +70,8 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
     earth.DrawDepthMap(context);
     mars.DrawDepthMap(context);
     jupiter.DrawDepthMap(context);
+    particle_earth.DrawDepthMap(context);
+    particle_mars.DrawDepthMap(context);
   }
 
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -140,8 +142,8 @@ int main(int argc, char **argv) {
   auto jupiter = Jupiter();
   auto particle_earth = ParticleGenerator(
       "resources/textures/particle.png", 500, 25.0f, 0.01f, context.earth_pos_);
-  auto particle_mars = ParticleGenerator("resources/textures/particle.png",
-                                         800, 38.0f, 0.01f, context.mars_pos_);
+  auto particle_mars = ParticleGenerator("resources/textures/particle.png", 800,
+                                         38.0f, 0.01f, context.mars_pos_);
 
   double last_keyboard_event = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {

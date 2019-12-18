@@ -14,8 +14,6 @@ glm::mat4 Jupiter::ModelTransformation(Context& context) {
       float((Time::Seconds() + Time::Milliseconds() / 1000.0) / 60.0 * 360));
   float radius = 0.9;
   auto model = context.kClockPosition;
-  context.jupiter_pos_ =
-      glm::vec3(sin(angle) * radius, cos(angle) * radius, 0.0f);
   model = glm::rotate(model, -angle, glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -radius));
   model = Context::RotateEquator(model);
