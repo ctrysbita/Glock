@@ -148,5 +148,5 @@ void ParticleGenerator::respawnParticle(Particle &particle, glm::vec3 offset) {
   particle.Position.z = planet_pos_.z + random + offset.z;
   particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
   particle.Life = init_life_;
-  particle.Velocity = planet_pos_ * init_velocity_;
+  particle.Velocity = glm::normalize(particle.Position) * init_velocity_;
 }

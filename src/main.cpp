@@ -139,9 +139,9 @@ int main(int argc, char **argv) {
   auto mars = Mars();
   auto jupiter = Jupiter();
   auto particle_earth = ParticleGenerator(
-      "resources/textures/particle.png", 500, 14.0f, 0.05f, context.earth_pos_);
+      "resources/textures/particle.png", 500, 25.0f, 0.01f, context.earth_pos_);
   auto particle_mars = ParticleGenerator("resources/textures/particle.png",
-                                         500, 14.0f, 0.05f, context.mars_pos_);
+                                         800, 38.0f, 0.01f, context.mars_pos_);
 
   double last_keyboard_event = glfwGetTime();
   while (!glfwWindowShouldClose(window)) {
