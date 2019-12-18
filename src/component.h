@@ -119,6 +119,12 @@ class ModelComponent {
    */
   Shader& get_shader() { return shader_; }
 
+  /**
+   * @brief Transform component to its position.
+   *
+   * @param context Render context.
+   * @return glm::mat4 Transformation matrix.
+   */
   virtual glm::mat4 ModelTransformation(Context& context) {
     return glm::mat4(1.0f);
   }
@@ -130,5 +136,10 @@ class ModelComponent {
    */
   virtual void Draw(Context& context) = 0;
 
+  /**
+   * @brief Draw depth map using depth map shader in context.
+   *
+   * @param context Render context.
+   */
   virtual void DrawDepthMap(Context& context) = 0;
 };

@@ -26,15 +26,15 @@ glm::mat4 Jupiter::ModelTransformation(Context& context) {
 
 void Jupiter::Draw(Context& context) {
   auto model = ModelTransformation(context);
-  auto view = context.camera_.GetViewMatrix();
-  auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
+  auto view = context.get_camera().GetViewMatrix();
+  auto projection = glm::perspective(glm::radians(context.get_camera().zoom_),
                                      context.Ratio(), 0.1f, 100.0f);
 
   shader_.Use();
   shader_.SetMat4("Model", model);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
-  shader_.SetVec3("ViewPos", context.camera_.position_);
+  shader_.SetVec3("ViewPos", context.get_camera().position_);
 
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   glBindVertexArray(vao_);

@@ -26,12 +26,12 @@ void ParticleGenerator::Update(GLfloat dt, Context &context,
 }
 
 // Render all particles
-void ParticleGenerator::Draw(Context & context) {
+void ParticleGenerator::Draw(Context &context) {
   auto model = context.kClockPosition;
   model = glm::translate(model, glm::vec3(0, 0.3, 0.0));
-  auto view = context.camera_.GetViewMatrix();
-  auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
-    context.Ratio(), 0.1f, 100.0f);
+  auto view = context.get_camera().GetViewMatrix();
+  auto projection = glm::perspective(glm::radians(context.get_camera().zoom_),
+                                     context.Ratio(), 0.1f, 100.0f);
   // Use additive blending to give it a 'glow' effect
   glBlendFunc(GL_SRC_ALPHA, GL_ONE);
   this->shader_.Use();

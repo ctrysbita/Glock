@@ -48,11 +48,11 @@ void Reshape(GLFWwindow *window, GLsizei width, GLsizei height) {
 }
 
 void MouseMovementCallback(GLFWwindow *window, double xpos, double ypos) {
-  context.camera_.ProcessMouseMovement(xpos, ypos);
+  context.get_camera().ProcessMouseMovement(xpos, ypos);
 }
 
 void MouseScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
-  context.camera_.ProcessMouseScroll(yoffset);
+  context.get_camera().ProcessMouseScroll(yoffset);
 }
 
 void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
@@ -61,7 +61,7 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glViewport(0, 0, 1024, 1024);
-  glBindFramebuffer(GL_FRAMEBUFFER, context.depth_map_frame_);
+  glBindFramebuffer(GL_FRAMEBUFFER, context.depth_map_frame);
   glClear(GL_DEPTH_BUFFER_BIT);
 
   dial.DrawDepthMap(context);
@@ -70,11 +70,11 @@ void Display(SkyBox &sky, Earth &earth, Dial &dial, Mars &mars,
   jupiter.DrawDepthMap(context);
 
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  glViewport(0, 0, context.window_width_, context.window_height_);
+  glViewport(0, 0, context.window_width, context.window_height);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glActiveTexture(GL_TEXTURE1);
-  glBindTexture(GL_TEXTURE_2D, context.depth_map_texture_);
+  glBindTexture(GL_TEXTURE_2D, context.depth_map_texture);
 
   sky.Draw(context);
   dial.Draw(context);
@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
 
   while (!glfwWindowShouldClose(window)) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) break;
-    context.camera_.ProcessKeyboard(window);
+    context.get_camera().ProcessKeyboard(window);
 
     Display(sky, earth, dial, mars, jupiter, particle);
 

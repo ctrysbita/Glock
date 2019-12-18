@@ -59,8 +59,8 @@ void SkyBox::Draw(Context& context) {
   glDepthFunc(GL_LEQUAL);
 
   shader_.Use();
-  auto view = glm::mat4(glm::mat3(context.camera_.GetViewMatrix()));
-  auto projection = glm::perspective(glm::radians(context.camera_.zoom_),
+  auto view = glm::mat4(glm::mat3(context.get_camera().GetViewMatrix()));
+  auto projection = glm::perspective(glm::radians(context.get_camera().zoom_),
                                      context.Ratio(), 0.1f, 100.0f);
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
