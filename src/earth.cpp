@@ -9,13 +9,17 @@ Earth::Earth()
                      "resources/textures/earth.jpg") {}
 
 glm::mat4 Earth::ModelTransformation(Context& context) {
-  auto model = context.kClockPosition;
   auto hour = Time::Hours() + 8;
   if (hour >= 12) hour -= 12;
-  model = glm::rotate(
-      model, glm::radians(float(-(hour + Time::Minutes() / 60.0) / 12.0 * 360)),
-      glm::vec3(0.0f, 1.0f, 0.0f));
-  model = glm::translate(model, glm::vec3(0, 0.3, -0.3));
+  auto angle =
+      glm::radians(float((hour + Time::Minutes() / 60.0) / 12.0 * 360));
+  auto radius = 0.3;
+  auto pos_percent = 0.8f;
+  auto model = context.kClockPosition;
+  context.earth_pos_ =
+      glm::vec3(sin(angle) * radius, cos(angle) * radius, 0.0f) * pos_percent;
+  model = glm::rotate(model, -angle, glm::vec3(0.0f, 1.0f, 0.0f));
+  model = glm::translate(model, glm::vec3(0, 0.3, -radius));
   model = Context::RotateEquator(model);
   model = Context::RotatePlanet(model, 0.05f);
   return model;

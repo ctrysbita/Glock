@@ -14,8 +14,10 @@ glm::mat4 Mars::ModelTransformation(Context& context) {
              (Time::Seconds() + Time::Milliseconds() / 1000.0) / 60.0) /
             60.0 * 360));
   float radius = 0.6;
+  auto pos_percent = 0.9f;
   auto model = context.kClockPosition;
-  context.mars_pos_ = glm::vec3(sin(angle) * radius, cos(angle) * radius, 0.0f);
+  context.mars_pos_ =
+      glm::vec3(sin(angle) * radius, cos(angle) * radius, 0.0f) * pos_percent;
 
   model = glm::rotate(model, -angle, glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -radius));
