@@ -40,13 +40,9 @@ class ParticleGenerator {
   Shader shader_;
   GLuint vao_;
   glm::vec3& planet_pos_;
-  // Initializes buffer and vertex attributes
-  void init();
-
-  // Returns the first Particle index that's currently unused e.g. life_ <= 0.0f
-  // or 0 if no particle is currently inactive
+  // Returns the index of first dead particle, 0 if all particles are alive.
   GLuint firstUnusedParticle();
-  // Respawns particle
+  // Respawns a particle
   void respawnParticle(Particle& particle,
                        glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
 };

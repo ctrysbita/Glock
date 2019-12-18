@@ -8,7 +8,27 @@ ParticleGenerator::ParticleGenerator(GLuint amount, GLfloat init_life,
       init_life_(init_life),
       init_velocity_(init_velocity),
       planet_pos_(planet_pos) {
-  this->init();
+  // Set up mesh property
+  GLuint vbo;
+  // Particle vertices
+  GLfloat particle_quad[] = {0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+                             0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
+  glGenVertexArrays(1, &this->vao_);
+  glGenBuffers(1, &vbo);
+  glBindVertexArray(this->vao_);
+  // Load mesh buffer
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(particle_quad), particle_quad,
+               GL_STATIC_DRAW);
+  // Set mesh attributes
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
+                        (GLvoid *)0);
+  glBindVertexArray(0);
+
+  // Initialize particles
+  for (GLuint i = 0; i < this->amount_; ++i)
+    this->particles_.push_back(Particle());
 }
 
 void ParticleGenerator::Update(GLfloat dt, Context &context,
@@ -63,30 +83,6 @@ void ParticleGenerator::Draw(Context &context) {
       glBindVertexArray(0);
     }
   }
-}
-
-void ParticleGenerator::init() {
-  // Set up mesh property
-  GLuint vbo;
-  // Particle vertices
-  GLfloat particle_quad[] = {0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-                             0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
-  glGenVertexArrays(1, &this->vao_);
-  glGenBuffers(1, &vbo);
-  glBindVertexArray(this->vao_);
-  // Load mesh buffer
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(particle_quad), particle_quad,
-               GL_STATIC_DRAW);
-  // Set mesh attributes
-  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
-                        (GLvoid *)0);
-  glBindVertexArray(0);
-
-  // Initialize particles
-  for (GLuint i = 0; i < this->amount_; ++i)
-    this->particles_.push_back(Particle());
 }
 
 // Cache the last used particle for quicker search for dead particles.
