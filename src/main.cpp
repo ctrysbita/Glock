@@ -82,9 +82,9 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   earth.Draw(context);
   mars.Draw(context);
   jupiter.Draw(context);
-  particle_mars.Update(0.05, context, 3);
+  particle_mars.Update(0.05, context, 1);
   particle_mars.Draw(context);
-  particle_earth.Update(0.05, context, 3);
+  particle_earth.Update(0.05, context, 1);
   particle_earth.Draw(context);
 }
 
@@ -137,9 +137,9 @@ int main(int argc, char **argv) {
   auto mars = Mars();
   auto jupiter = Jupiter();
   auto particle_earth = ParticleGenerator(
-      "resources/textures/particle.png", 1000, 7.0f, 0.01f, context.earth_pos_);
+      "resources/textures/particle.png", 500, 14.0f, 0.05f, context.earth_pos_);
   auto particle_mars = ParticleGenerator("resources/textures/particle.png",
-                                         1000, 7.0f, 0.01f, context.mars_pos_);
+                                         500, 14.0f, 0.05f, context.mars_pos_);
 
   while (!glfwWindowShouldClose(window)) {
     // Process keyboard events.

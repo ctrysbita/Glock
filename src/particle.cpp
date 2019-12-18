@@ -136,7 +136,7 @@ GLuint ParticleGenerator::firstUnusedParticle() {
 }
 
 void ParticleGenerator::respawnParticle(Particle &particle, glm::vec3 offset) {
-  GLfloat random = 1 - abs(((rand() % 1000) - 500) / 2000);
+  GLfloat random = 1 - abs(((rand() % 1000) - 500) / 500);
   GLfloat rColor = 0.5 + ((rand() % 100) / 100.0f);
   particle.Position.x = planet_pos_.x * random + offset.x;
   particle.Position.y = planet_pos_.y * random + offset.y;
