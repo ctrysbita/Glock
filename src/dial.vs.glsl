@@ -4,9 +4,9 @@ layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 uv;
 
 out vec3 FragmentPos;
+out vec4 FragmentPosLightSpace;
 out vec3 Normal;
 out vec2 UV;
-out vec4 FragmentPosLightSpace;
 
 uniform mat4 Model;
 uniform mat4 View;

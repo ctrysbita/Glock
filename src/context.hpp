@@ -49,6 +49,19 @@ class Context {
   inline Camera& get_camera() { return camera_; }
   inline Shader& get_depth_map_shader() { return depth_map_shader_.value(); }
 
+  static glm::mat4 RotateEcliptic(glm::mat4 origin) {
+    return glm::rotate(origin, glm::radians(-30.0f),
+                       glm::vec3(1.0f, 0.0f, 0.0f));
+  }
+
+  static glm::mat4 RotatePlanet(glm::mat4 origin, float speed) {
+    return glm::rotate(
+        origin,
+        glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) *
+                           speed * 360)),
+        glm::vec3(0.0f, 1.0f, 0.0f));
+  }
+
   /**
    * @brief Update width and height in a Context object.
    *
@@ -66,19 +79,6 @@ class Context {
    * @return float Ratio of window width and height.
    */
   inline float Ratio() { return (float)window_width_ / window_height_; }
-
-  static glm::mat4 RotateEcliptic(glm::mat4 origin) {
-    return glm::rotate(origin, glm::radians(-30.0f),
-                       glm::vec3(1.0f, 0.0f, 0.0f));
-  }
-
-  static glm::mat4 PlanetRotate(glm::mat4 origin, float speed) {
-    return glm::rotate(
-        origin,
-        glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) *
-                           speed * 360)),
-        glm::vec3(0.0f, 1.0f, 0.0f));
-  }
 
   /**
    * @brief Initialize depth map frame buffer, texture and shader.
@@ -102,7 +102,7 @@ class Context {
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
                            depth_map_texture_, 0);
 
-    // Disable draw and read
+    // Disable color rendering for depth map.
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
 

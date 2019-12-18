@@ -1,4 +1,4 @@
-#include "mars.h"
+#include "planets.h"
 
 #include "../resources/models/sphere.inc.h"
 #include "time.hpp"
@@ -19,7 +19,7 @@ glm::mat4 Mars::ModelTransformation(Context& context) {
       glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::translate(model, glm::vec3(0, 0.3, -0.6));
   model = Context::RotateEcliptic(model);
-  model = Context::PlanetRotate(model, 0.05f);
+  model = Context::RotatePlanet(model, 0.05f);
   model = glm::scale(model, glm::vec3(.75, .75, .75));
   return model;
 }
