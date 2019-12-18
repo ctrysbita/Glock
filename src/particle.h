@@ -18,17 +18,6 @@ class Particle {
 
 // Class for generating and organizing particles.
 class ParticleGenerator {
- public:
-  ParticleGenerator(GLuint amount, GLfloat init_life, GLfloat init_velocity,
-                    glm::vec3& planet_pos);
-  // Update states of all particles
-  void Update(GLfloat dt, Context& context, GLuint newParticles,
-              GLboolean respawn,
-              glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
-  // Draw all particles
-  void Draw(Context& context);
-  void DrawDepthMap(Context& context);
-
  private:
   // Hold all particles
   std::vector<Particle> particles_;
@@ -40,9 +29,43 @@ class ParticleGenerator {
   Shader shader_;
   GLuint vao_;
   glm::vec3& planet_pos_;
-  // Returns the index of first dead particle, 0 if all particles are alive.
-  GLuint firstUnusedParticle();
-  // Respawns a particle
-  void respawnParticle(Particle& particle,
+
+  /**
+   * @brief Returns the index of first dead particle, 0 if all particles are
+   * alive.
+   *
+   * @return GLuint
+   */
+  GLuint FirstUnusedParticle();
+  /**
+   * @brief Respawns a particle.
+   *
+   * @param particle
+   * @param offset
+   */
+  void RespawnParticle(Particle& particle,
                        glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
+
+ public:
+  ParticleGenerator(GLuint amount, GLfloat init_life, GLfloat init_velocity,
+                    glm::vec3& planet_pos);
+  /**
+   * @brief Update states of all particles.
+   *
+   * @param dt
+   * @param context
+   * @param newParticles
+   * @param respawn
+   * @param offset
+   */
+  void Update(GLfloat dt, Context& context, GLuint newParticles,
+              GLboolean respawn,
+              glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
+  /**
+   * @brief Draw all particles.
+   *
+   * @param context
+   */
+  void Draw(Context& context);
+  void DrawDepthMap(Context& context);
 };

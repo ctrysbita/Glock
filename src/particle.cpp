@@ -37,8 +37,8 @@ void ParticleGenerator::Update(GLfloat dt, Context &context,
   // Create new particles if asked
   if (respawn) {
     for (GLuint i = 0; i < new_particles; ++i) {
-      int unusedParticle = this->firstUnusedParticle();
-      this->respawnParticle(this->particles_[unusedParticle], offset);
+      int unusedParticle = this->FirstUnusedParticle();
+      this->RespawnParticle(this->particles_[unusedParticle], offset);
     }
   }
   // Update all particles' state
@@ -87,7 +87,7 @@ void ParticleGenerator::Draw(Context &context) {
 
 // Cache the last used particle for quicker search for dead particles.
 GLuint last_used_particle = 0;
-GLuint ParticleGenerator::firstUnusedParticle() {
+GLuint ParticleGenerator::FirstUnusedParticle() {
   // Search from last used particle first.
   for (GLuint i = last_used_particle; i < this->amount_; ++i) {
     if (this->particles_[i].life_ <= 0.0f) {
@@ -107,7 +107,7 @@ GLuint ParticleGenerator::firstUnusedParticle() {
   return 0;
 }
 
-void ParticleGenerator::respawnParticle(Particle &particle, glm::vec3 offset) {
+void ParticleGenerator::RespawnParticle(Particle &particle, glm::vec3 offset) {
   // Randomly generate particle position and color.
   GLfloat random = 1 - abs(((rand() % 1000) - 500) / 500);
   GLfloat rColor = 0.5 + ((rand() % 100) / 100.0f);
