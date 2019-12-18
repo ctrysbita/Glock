@@ -153,8 +153,9 @@ int main(int argc, char **argv) {
         glfwGetTime() - last_keyboard_event > 1.0) {
       context.enable_shadow_ = !context.enable_shadow_;
       last_keyboard_event = glfwGetTime();
-    } else if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS &&
-               glfwGetTime() - last_keyboard_event > 1.0) {
+    }
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS &&
+        glfwGetTime() - last_keyboard_event > 1.0) {
       context.enable_particle_ = !context.enable_particle_;
       last_keyboard_event = glfwGetTime();
     }

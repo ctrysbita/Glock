@@ -3,7 +3,7 @@
 #include "component.h"
 
 /**
- * @brief Class for the Earth object.
+ * @brief Class for the Earth.
  */
 class Earth : public ModelComponent {
  public:
@@ -17,7 +17,7 @@ class Earth : public ModelComponent {
 };
 
 /**
- * @brief Class for the Mars object.
+ * @brief Class for the Mars.
  */
 class Mars : public ModelComponent {
  public:
@@ -31,7 +31,7 @@ class Mars : public ModelComponent {
 };
 
 /**
- * @brief Class for the Jupiter object.
+ * @brief Class for the Jupiter.
  */
 class Jupiter : public ModelComponent {
  public:

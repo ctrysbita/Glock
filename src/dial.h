@@ -4,7 +4,6 @@
 
 /**
  * @brief Class for the clock dial.
- *
  */
 class Dial : public ModelComponent {
  public:
@@ -13,8 +12,6 @@ class Dial : public ModelComponent {
   virtual ~Dial() {}
 
   glm::mat4 ModelTransformation(Context& context) override;
-
   void Draw(Context& context) override;
-
   void DrawDepthMap(Context& context) override;
 };
