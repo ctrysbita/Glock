@@ -104,16 +104,7 @@
     <ClInclude Include="src\component.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\earth.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="src\time.hpp">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\jupiter.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\mars.h">
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="src\context.hpp">
@@ -122,43 +113,8 @@
     <ClInclude Include="src\particle.h">
       <Filter>headers</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resources\textures\sky\back.jpg">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\back.png">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\bottom.jpg">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\bottom.png">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\front.jpg">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\front.png">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\left.jpg">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\left.png">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\right.jpg">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\right.png">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\top.jpg">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
-    <Image Include="resources\textures\sky\top.png">
-      <Filter>resources\textures\sky</Filter>
-    </Image>
+    <ClInclude Include="src\planets.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

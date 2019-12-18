@@ -175,27 +175,11 @@
     <ClInclude Include="src\component.h" />
     <ClInclude Include="src\context.hpp" />
     <ClInclude Include="src\dial.h" />
-    <ClInclude Include="src\earth.h" />
-    <ClInclude Include="src\jupiter.h" />
-    <ClInclude Include="src\mars.h" />
     <ClInclude Include="src\particle.h" />
+    <ClInclude Include="src\planets.h" />
     <ClInclude Include="src\shader.hpp" />
     <ClInclude Include="src\sky.h" />
     <ClInclude Include="src\time.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resources\textures\sky\back.jpg" />
-    <Image Include="resources\textures\sky\back.png" />
-    <Image Include="resources\textures\sky\bottom.jpg" />
-    <Image Include="resources\textures\sky\bottom.png" />
-    <Image Include="resources\textures\sky\front.jpg" />
-    <Image Include="resources\textures\sky\front.png" />
-    <Image Include="resources\textures\sky\left.jpg" />
-    <Image Include="resources\textures\sky\left.png" />
-    <Image Include="resources\textures\sky\right.jpg" />
-    <Image Include="resources\textures\sky\right.png" />
-    <Image Include="resources\textures\sky\top.jpg" />
-    <Image Include="resources\textures\sky\top.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
