@@ -1,7 +1,7 @@
 #include "particle.h"
 
-ParticleGenerator::ParticleGenerator(const char *t_path, GLuint amount)
-    : shader_("src/particle.vs.glsl", "src/particle.fs.glsl"), amount_(amount) {
+ParticleGenerator::ParticleGenerator(const char *t_path, GLuint amount, GLfloat init_life, GLfloat init_velocity)
+    : shader_("src/particle.vs.glsl", "src/particle.fs.glsl"), amount_(amount), init_life_(init_life), init_velocity_(init_velocity) {
   this->init();
   loadTexture(t_path);
 }
@@ -15,11 +15,13 @@ void ParticleGenerator::Update(GLfloat dt, Context &context,
   }
   // Update all particles
   for (GLuint i = 0; i < this->amount_; ++i) {
-    dt *= ((rand() % 1000 - 500) / 1000.0 + 1);
+    // dt *= ((rand() % 1000 - 500) / 1000.0 + 1);
     Particle &p = this->particles[i];
+    float z_displace = (rand() % 1000 - 500) / 500;
     p.Life -= dt;         // reduce life
     if (p.Life > 0.0f) {  // particle is alive, thus update
       p.Position -= p.Velocity * dt;
+      p.Position.z += z_displace * dt;
       p.Color.a -= dt * 2.5;
     }
   }
@@ -29,9 +31,10 @@ void ParticleGenerator::Update(GLfloat dt, Context &context,
 void ParticleGenerator::Draw(Context &context) {
   auto model = context.kClockPosition;
   model = glm::translate(model, glm::vec3(0, 0.3, 0.0));
+  model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
   auto view = context.get_camera().GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.get_camera().zoom_),
-                                     context.Ratio(), 0.1f, 100.0f);
+    context.Ratio(), 0.1f, 100.0f);
   // Use additive blending to give it a 'glow' effect
   glBlendFunc(GL_SRC_ALPHA, GL_ONE);
   this->shader_.Use();
@@ -136,6 +139,6 @@ void ParticleGenerator::respawnParticle(Particle &particle, Context &context,
   random = ((rand() % 100) - 50) / 1000.0f;
   particle.Position.z = context.jupiter_pos_.z + random + offset.z;
   particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
-  particle.Life = 1.0f;
-  particle.Velocity = context.jupiter_velocity_ * 0.1f;
+  particle.Life = init_life_;
+  particle.Velocity = context.jupiter_velocity_ * init_velocity_;
 }

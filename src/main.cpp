@@ -80,7 +80,7 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   earth.Draw(context);
   mars.Draw(context);
   jupiter.Draw(context);
-  particle.Update(0.01, context, 10);
+  particle.Update(0.05, context, 10);
   particle.Draw(context);
 }
 
@@ -132,7 +132,7 @@ int main(int argc, char **argv) {
   auto dial = Dial();
   auto mars = Mars();
   auto jupiter = Jupiter();
-  auto particle = ParticleGenerator("resources/textures/particle.jpg", 500);
+  auto particle = ParticleGenerator("resources/textures/particle.jpg", 500, 1.0f, 0.2f);
 
   while (!glfwWindowShouldClose(window)) {
     // Process keyboard events.

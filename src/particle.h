@@ -22,7 +22,7 @@ public:
 class ParticleGenerator {
  public:
   // Constructor
-  ParticleGenerator(const char* t_path, GLuint amount);
+  ParticleGenerator(const char* t_path, GLuint amount, GLfloat init_life, GLfloat init_velocity);
   // Update all particles
   void Update(GLfloat dt, Context& context, GLuint newParticles, glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
   // Render all particles
@@ -32,6 +32,9 @@ class ParticleGenerator {
   // State
   std::vector<Particle> particles;
   GLuint amount_;
+  // Particle param
+  GLfloat init_life_;
+  GLfloat init_velocity_;
   // Render state
   Shader shader_;
   unsigned int texture_id_ = 0;

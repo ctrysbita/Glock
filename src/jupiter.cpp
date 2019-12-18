@@ -2,6 +2,7 @@
 
 #include "../resources/models/sphere.inc.h"
 #include "time.hpp"
+#include <cmath>
 
 Jupiter::Jupiter()
     : ModelComponent("src/sphere.vs.glsl", "src/sphere.fs.glsl",
@@ -9,15 +10,16 @@ Jupiter::Jupiter()
                      "resources/textures/jupiter.jpg") {}
 
 glm::mat4 Jupiter::ModelTransformation(Context& context) {
+  auto angle = glm::radians(float((Time::Seconds() + Time::Milliseconds() / 1000.0) /
+    60.0 * 360));
+  float radius = 0.9;
   auto model = context.kClockPosition;
-  context.jupiter_pos_ = glm::vec3(0.0f, 0.0f, 0.0f);
-  context.jupiter_velocity_ = glm::vec3(1.0f, 0.0f, 0.0f);
+  context.jupiter_pos_ = glm::vec3(sin(angle) * radius, cos(angle) * radius, 0.0f);
+  context.jupiter_velocity_.y = -(context.jupiter_pos_.x / sqrt(pow(context.jupiter_pos_.x, 2) + pow(context.jupiter_pos_.y, 2)));
+  context.jupiter_velocity_.x = -(context.jupiter_pos_.y / context.jupiter_pos_.x) * context.jupiter_velocity_.y;
   model = glm::rotate(
-      model,
-      glm::radians(float(-(Time::Seconds() + Time::Milliseconds() / 1000.0) /
-                         60.0 * 360)),
-      glm::vec3(0.0f, 1.0f, 0.0f));
-  model = glm::translate(model, glm::vec3(0, 0.3, -0.9));
+      model, -angle, glm::vec3(0.0f, 1.0f, 0.0f));
+  model = glm::translate(model, glm::vec3(0, 0.3, -radius));
   model = Context::RotateEquator(model);
   model = Context::RotatePlanet(model, 0.13f);
   model = glm::scale(model, glm::vec3(1.75, 1.75, 1.75));
