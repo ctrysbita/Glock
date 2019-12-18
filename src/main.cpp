@@ -61,7 +61,7 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glViewport(0, 0, 1024, 1024);
+  glViewport(0, 0, context.kDepthMapResolution, context.kDepthMapResolution);
   glBindFramebuffer(GL_FRAMEBUFFER, context.depth_map_frame);
   glClear(GL_DEPTH_BUFFER_BIT);
 

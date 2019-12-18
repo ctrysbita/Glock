@@ -23,6 +23,8 @@ class Context {
   std::optional<Shader> depth_map_shader_;
 
  public:
+  // The resolution of depth map. Higher resolution can provide a better shadow.
+  const GLsizei kDepthMapResolution = 5120;
   const glm::mat4 kClockPosition = glm::rotate(
       glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0, 0.0, 0.0));
 
@@ -103,8 +105,8 @@ class Context {
 
     // Bind to texture and configure parameters.
     glBindTexture(GL_TEXTURE_2D, depth_map_texture_);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0,
-                 GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, kDepthMapResolution,
+                 kDepthMapResolution, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

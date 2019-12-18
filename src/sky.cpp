@@ -25,9 +25,9 @@ const float SkyBox::kVertices[108] = {
 };
 
 const std::array<std::string, 6> SkyBox::kTextures = {
-    "resources/textures/crossing/px.jpg", "resources/textures/crossing/nx.jpg",
-    "resources/textures/crossing/py.jpg", "resources/textures/crossing/ny.jpg",
-    "resources/textures/crossing/pz.jpg", "resources/textures/crossing/nz.jpg",
+    "resources/textures/sky/px.jpg", "resources/textures/sky/nx.jpg",
+    "resources/textures/sky/py.jpg", "resources/textures/sky/ny.jpg",
+    "resources/textures/sky/pz.jpg", "resources/textures/sky/nz.jpg",
 };
 
 void SkyBox::LoadCubeMap() {
