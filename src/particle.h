@@ -26,6 +26,7 @@ class ParticleGenerator {
                     GLfloat init_velocity, glm::vec3& planet_pos);
   // Update all particles
   void Update(GLfloat dt, Context& context, GLuint newParticles,
+              GLboolean respawn,
               glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
   // Render all particles
   void Draw(Context& context);

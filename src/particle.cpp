@@ -13,18 +13,25 @@ ParticleGenerator::ParticleGenerator(const char *t_path, GLuint amount,
 }
 
 void ParticleGenerator::Update(GLfloat dt, Context &context,
-                               GLuint newParticles, glm::vec3 offset) {
-  // Add new particles
-  for (GLuint i = 0; i < newParticles; ++i) {
-    int unusedParticle = this->firstUnusedParticle();
-    this->respawnParticle(this->particles[unusedParticle], offset);
+                               GLuint newParticles, GLboolean respawn,
+                               glm::vec3 offset) {
+  // Create new particles if asked
+  if (respawn) {
+    for (GLuint i = 0; i < newParticles; ++i) {
+      int unusedParticle = this->firstUnusedParticle();
+      this->respawnParticle(this->particles[unusedParticle], offset);
+    }
   }
   // Update all particles
   for (GLuint i = 0; i < this->amount_; ++i) {
     // dt *= ((rand() % 1000 - 500) / 1000.0 + 1);
     Particle &p = this->particles[i];
     float z_displace = (rand() % 1000 - 500) / 500;
-    p.Life -= dt;         // reduce life
+    if (abs(p.Position.x) < abs(p.Velocity.x * dt) ||
+        abs(p.Position.y) < abs(p.Velocity.y * dt))
+      p.Life = 0;
+    else
+      p.Life -= dt;       // reduce life
     if (p.Life > 0.0f) {  // particle is alive, thus update
       p.Position -= p.Velocity * dt;
       p.Position.z += z_displace * dt;

@@ -86,9 +86,9 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   earth.Draw(context);
   mars.Draw(context);
   jupiter.Draw(context);
-  particle_mars.Update(0.05, context, 1);
+  particle_mars.Update(0.05, context, 1, context.enable_particle_);
   particle_mars.Draw(context);
-  particle_earth.Update(0.05, context, 1);
+  particle_earth.Update(0.05, context, 1, context.enable_particle_);
   particle_earth.Draw(context);
 }
 
@@ -152,6 +152,10 @@ int main(int argc, char **argv) {
     if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS &&
         glfwGetTime() - last_keyboard_event > 1.0) {
       context.enable_shadow_ = !context.enable_shadow_;
+      last_keyboard_event = glfwGetTime();
+    } else if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS &&
+               glfwGetTime() - last_keyboard_event > 1.0) {
+      context.enable_particle_ = !context.enable_particle_;
       last_keyboard_event = glfwGetTime();
     }
 
