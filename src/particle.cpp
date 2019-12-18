@@ -136,12 +136,14 @@ GLuint ParticleGenerator::firstUnusedParticle() {
 }
 
 void ParticleGenerator::respawnParticle(Particle &particle, glm::vec3 offset) {
-  GLfloat random = ((rand() % 100) - 50) / 1000.0f;
+  GLfloat random = 1 - abs(((rand() % 1000) - 500) / 2000);
   GLfloat rColor = 0.5 + ((rand() % 100) / 100.0f);
-  particle.Position.x = planet_pos_.x + random + offset.x;
-  random = ((rand() % 100) - 50) / 1000.0f;
-  particle.Position.y = planet_pos_.y + random + offset.y;
-  random = ((rand() % 100) - 50) / 1000.0f;
+  particle.Position.x = planet_pos_.x * random + offset.x;
+  particle.Position.y = planet_pos_.y * random + offset.y;
+  random = ((rand() % 100) - 50) / 1500.0f;
+  particle.Position.x -= random;
+  particle.Position.y -= random;
+  random = ((rand() % 100) - 50) / 1500.0f;
   particle.Position.z = planet_pos_.z + random + offset.z;
   particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
   particle.Life = init_life_;

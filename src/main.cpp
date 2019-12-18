@@ -136,10 +136,10 @@ int main(int argc, char **argv) {
   auto dial = Dial();
   auto mars = Mars();
   auto jupiter = Jupiter();
-  auto particle_earth = ParticleGenerator("resources/textures/particle.png",
-                                          500, 7.0f, 0.01f, context.earth_pos_);
-  auto particle_mars = ParticleGenerator("resources/textures/particle.png", 500,
-                                         7.0f, 0.01f, context.mars_pos_);
+  auto particle_earth = ParticleGenerator(
+      "resources/textures/particle.png", 1000, 7.0f, 0.01f, context.earth_pos_);
+  auto particle_mars = ParticleGenerator("resources/textures/particle.png",
+                                         1000, 7.0f, 0.01f, context.mars_pos_);
 
   while (!glfwWindowShouldClose(window)) {
     // Process keyboard events.
