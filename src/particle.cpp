@@ -34,8 +34,8 @@ void ParticleGenerator::Update(GLfloat dt, Context &context,
       p.Life -= dt;       // reduce life
     if (p.Life > 0.0f) {  // particle is alive, thus update
       p.Position -= p.Velocity * dt;
-      p.Position.z += z_displace * dt;
-      p.Color.a -= dt * 2.5;
+      // p.Position.z += z_displace * dt;
+      p.Color.a -= dt * 5;
     }
   }
 }
