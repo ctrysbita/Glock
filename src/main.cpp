@@ -55,7 +55,8 @@ void MouseScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
  * @param particle Particle effect.
  */
 void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
-             Jupiter &jupiter, ParticleGenerator &particle) {
+             Jupiter &jupiter, ParticleGenerator &particle_jup,
+             ParticleGenerator &particle_mars) {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -80,8 +81,10 @@ void Display(SkyBox &sky, Dial &dial, Earth &earth, Mars &mars,
   earth.Draw(context);
   mars.Draw(context);
   jupiter.Draw(context);
-  particle.Update(0.05, context, 10);
-  particle.Draw(context);
+  particle_jup.Update(0.05, context, 10);
+  particle_jup.Draw(context);
+  particle_mars.Update(0.05, context, 10);
+  particle_mars.Draw(context);
 }
 
 int main(int argc, char **argv) {
@@ -132,7 +135,12 @@ int main(int argc, char **argv) {
   auto dial = Dial();
   auto mars = Mars();
   auto jupiter = Jupiter();
-  auto particle = ParticleGenerator("resources/textures/particle.jpg", 500, 1.0f, 0.2f);
+  auto particle_earth = ParticleGenerator("resources/textures/particle.jpg",
+                                          500, 7.0f, 0.01f, context.earth_pos_);
+  auto particle_mars = ParticleGenerator("resources/textures/particle.jpg", 500,
+                                         7.0f, 0.01f, context.mars_pos_);
+  auto particle_jup = ParticleGenerator("resources/textures/particle.jpg", 500,
+                                        7.0f, 0.01f, context.jupiter_pos_);
 
   while (!glfwWindowShouldClose(window)) {
     // Process keyboard events.
@@ -140,7 +148,7 @@ int main(int argc, char **argv) {
     context.get_camera().ProcessKeyboard(window);
 
     // Render scene.
-    Display(sky, dial, earth, mars, jupiter, particle);
+    Display(sky, dial, earth, mars, jupiter, particle_jup, particle_mars);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

@@ -38,10 +38,9 @@ class Context {
 
   glm::vec3 light_position_ = glm::vec3(2.0f, 2.0f, 2.0f);
 
-  glm::vec2 earth_pos_;
-  glm::vec2 mars_pos_;
+  glm::vec3 earth_pos_;
+  glm::vec3 mars_pos_;
   glm::vec3 jupiter_pos_;
-  glm::vec3 jupiter_velocity_;
 
   Context() : camera_(glm::vec3(0.0f, 0.0f, 3.0f)) {}
   ~Context() {}

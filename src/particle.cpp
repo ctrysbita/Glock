@@ -1,7 +1,13 @@
 #include "particle.h"
 
-ParticleGenerator::ParticleGenerator(const char *t_path, GLuint amount, GLfloat init_life, GLfloat init_velocity)
-    : shader_("src/particle.vs.glsl", "src/particle.fs.glsl"), amount_(amount), init_life_(init_life), init_velocity_(init_velocity) {
+ParticleGenerator::ParticleGenerator(const char *t_path, GLuint amount,
+                                     GLfloat init_life, GLfloat init_velocity,
+                                     glm::vec3 &planet_pos)
+    : shader_("src/particle.vs.glsl", "src/particle.fs.glsl"),
+      amount_(amount),
+      init_life_(init_life),
+      init_velocity_(init_velocity),
+      planet_pos_(planet_pos) {
   this->init();
   loadTexture(t_path);
 }
@@ -11,7 +17,7 @@ void ParticleGenerator::Update(GLfloat dt, Context &context,
   // Add new particles
   for (GLuint i = 0; i < newParticles; ++i) {
     int unusedParticle = this->firstUnusedParticle();
-    this->respawnParticle(this->particles[unusedParticle], context, offset);
+    this->respawnParticle(this->particles[unusedParticle], offset);
   }
   // Update all particles
   for (GLuint i = 0; i < this->amount_; ++i) {
@@ -34,7 +40,7 @@ void ParticleGenerator::Draw(Context &context) {
   model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
   auto view = context.get_camera().GetViewMatrix();
   auto projection = glm::perspective(glm::radians(context.get_camera().zoom_),
-    context.Ratio(), 0.1f, 100.0f);
+                                     context.Ratio(), 0.1f, 100.0f);
   // Use additive blending to give it a 'glow' effect
   glBlendFunc(GL_SRC_ALPHA, GL_ONE);
   this->shader_.Use();
@@ -129,16 +135,15 @@ GLuint ParticleGenerator::firstUnusedParticle() {
   return 0;
 }
 
-void ParticleGenerator::respawnParticle(Particle &particle, Context &context,
-                                        glm::vec3 offset) {
+void ParticleGenerator::respawnParticle(Particle &particle, glm::vec3 offset) {
   GLfloat random = ((rand() % 100) - 50) / 1000.0f;
   GLfloat rColor = 0.5 + ((rand() % 100) / 100.0f);
-  particle.Position.x = context.jupiter_pos_.x + random + offset.x;
+  particle.Position.x = planet_pos_.x + random + offset.x;
   random = ((rand() % 100) - 50) / 1000.0f;
-  particle.Position.y = context.jupiter_pos_.y + random + offset.y;
+  particle.Position.y = planet_pos_.y + random + offset.y;
   random = ((rand() % 100) - 50) / 1000.0f;
-  particle.Position.z = context.jupiter_pos_.z + random + offset.z;
+  particle.Position.z = planet_pos_.z + random + offset.z;
   particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
   particle.Life = init_life_;
-  particle.Velocity = context.jupiter_velocity_ * init_velocity_;
+  particle.Velocity = planet_pos_ * init_velocity_;
 }

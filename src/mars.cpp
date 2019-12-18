@@ -9,15 +9,16 @@ Mars::Mars()
                      "resources/textures/mars.jpg") {}
 
 glm::mat4 Mars::ModelTransformation(Context& context) {
+  auto angle = glm::radians(
+      float((Time::Minutes() +
+             (Time::Seconds() + Time::Milliseconds() / 1000.0) / 60.0) /
+            60.0 * 360));
+  float radius = 0.6;
   auto model = context.kClockPosition;
-  model = glm::rotate(
-      model,
-      glm::radians(
-          float(-(Time::Minutes() +
-                  (Time::Seconds() + Time::Milliseconds() / 1000.0) / 60.0) /
-                60.0 * 360)),
-      glm::vec3(0.0f, 1.0f, 0.0f));
-  model = glm::translate(model, glm::vec3(0, 0.3, -0.6));
+  context.mars_pos_ = glm::vec3(sin(angle) * radius, cos(angle) * radius, 0.0f);
+
+  model = glm::rotate(model, -angle, glm::vec3(0.0f, 1.0f, 0.0f));
+  model = glm::translate(model, glm::vec3(0, 0.3, -radius));
   model = Context::RotateEquator(model);
   model = Context::RotatePlanet(model, 0.05f);
   model = glm::scale(model, glm::vec3(.75, .75, .75));
