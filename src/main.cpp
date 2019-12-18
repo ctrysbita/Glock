@@ -8,6 +8,7 @@
 #include "planets.h"
 #include "sky.h"
 
+// Global render context.
 Context context;
 
 /**

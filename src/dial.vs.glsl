@@ -15,9 +15,9 @@ uniform mat4 LightSpace;
 
 void main() {
     FragmentPos = vec3(Model * vec4(pos * 1.5, 1.0));
+    FragmentPosLightSpace = LightSpace * vec4(FragmentPos, 1.0);
     Normal = mat3(transpose(inverse(Model))) * normal;
     UV = uv;
-    FragmentPosLightSpace = LightSpace * vec4(FragmentPos, 1.0);
 
     gl_Position = Projection * View * Model * vec4(pos * 1.5, 1.0);
 }
