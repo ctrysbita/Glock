@@ -4,7 +4,7 @@ in vec3 FragmentPos;
 in vec3 Normal;
 in vec2 UV;
 
-out vec4 FragColor;
+out vec4 FragmentColor;
 
 uniform sampler2D Texture;
 uniform vec3 ViewPos;
@@ -31,5 +31,5 @@ void main() {
     vec3 specular = spec * lightColor * 0.60;
 
     vec3 result = ambient + diffuse + specular;
-    FragColor = vec4(result, 1.0);
+    FragmentColor = vec4(result, 1.0);
 }

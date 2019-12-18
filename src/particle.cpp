@@ -53,11 +53,11 @@ void ParticleGenerator::Draw(Context &context) {
   this->shader_.Use();
   for (Particle particle : this->particles) {
     if (particle.Life > 0.0f) {
-      this->shader_.SetVec3("offset", particle.Position);
-      this->shader_.SetVec4("color", particle.Color);
-      this->shader_.SetMat4("projection", projection);
-      shader_.SetMat4("model", model);
-      shader_.SetMat4("view", view);
+      shader_.SetVec3("Offset", particle.Position);
+      shader_.SetMat4("Projection", projection);
+      shader_.SetMat4("Model", model);
+      shader_.SetMat4("View", view);
+      shader_.SetVec4("Color", particle.Color);
       glBindTexture(GL_TEXTURE_2D, texture_id_);
       glBindVertexArray(this->VAO);
       glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -165,12 +165,21 @@ void ParticleGenerator::DrawDepthMap(Context &context) {
   auto light_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 10.0f);
   auto light_space = light_projection * light_view;
 
-  context.get_depth_map_shader().Use();
-  context.get_depth_map_shader().SetMat4("LightSpace", light_space);
-  context.get_depth_map_shader().SetMat4("Model", model);
-  context.get_depth_map_shader().SetFloat("PosFactor", 0.016f);
-
   glBindVertexArray(VAO);
-  glDrawArrays(GL_TRIANGLES, 0, 6);
+  for (Particle particle : particles) {
+    if (particle.Life > 0.0f) {
+      context.get_depth_map_shader().Use();
+      context.get_depth_map_shader().SetMat4("LightSpace", light_space);
+      context.get_depth_map_shader().SetMat4("Model", model);
+      context.get_depth_map_shader().SetFloat("PosFactor", 0.016f);
+      context.get_depth_map_shader().SetBool("IsParticle", true);
+      context.get_depth_map_shader().SetVec3("Offset", particle.Position);
+
+      glDrawArrays(GL_TRIANGLES, 0, 6);
+    }
+  }
+
   glBindVertexArray(0);
+
+  context.get_depth_map_shader().SetBool("IsParticle", false);
 }

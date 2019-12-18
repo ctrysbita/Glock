@@ -1,10 +1,9 @@
 #version 410 core
-in vec4 ParticleColor;
-out vec4 color;
 
-uniform sampler2D sprite;
+out vec4 FragmentColor;
 
-void main()
-{
-    color = ParticleColor;
+uniform vec4 Color;
+
+void main() {
+    FragmentColor = Color;
 }

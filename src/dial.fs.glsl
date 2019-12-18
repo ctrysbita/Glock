@@ -5,7 +5,7 @@ in vec4 FragmentPosLightSpace;
 in vec3 Normal;
 in vec2 UV;
 
-out vec4 FragColor;
+out vec4 FragmentColor;
 
 uniform sampler2D Texture;
 uniform sampler2D ShadowMap;
@@ -65,5 +65,5 @@ void main() {
     float shadow = ShadowCalculation();
     vec3 result = ambient + (1.0 - shadow) * (diffuse + specular);
 
-    FragColor = vec4(result, 1.0);
+    FragmentColor = vec4(result, 1.0);
 }
