@@ -63,7 +63,7 @@ class Time {
   static auto Milliseconds() {
 #ifdef _MSC_VER
     return Subseconds() / 10000;
-#elif defined(__GNUC__) && defined(__MINGW32__)
+#elif defined(__MINGW32__) || defined(__linux)
     return Subseconds() / 1000000;
 #elif defined(__APPLE__)
     return Subseconds() / 1000;
