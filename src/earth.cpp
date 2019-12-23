@@ -1,6 +1,5 @@
-#include "planets.h"
-
 #include "../resources/models/sphere.inc.h"
+#include "planets.h"
 #include "time.hpp"
 
 Earth::Earth()
@@ -36,6 +35,7 @@ void Earth::Draw(Context& context) {
   shader_.SetMat4("View", view);
   shader_.SetMat4("Projection", projection);
   shader_.SetVec3("ViewPos", context.get_camera().position_);
+  shader_.SetVec3("LightPos", context.light_position_);
 
   glBindTexture(GL_TEXTURE_2D, texture_id_);
   glBindVertexArray(vao_);

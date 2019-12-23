@@ -32,6 +32,7 @@ void Dial::Draw(Context& context) {
   shader_.SetMat4("Projection", projection);
   shader_.SetVec3("ViewPos", context.get_camera().position_);
   shader_.SetMat4("LightSpace", light_space);
+  shader_.SetVec3("LightPos", context.light_position_);
   shader_.SetInt("Texture", 0);
   shader_.SetInt("ShadowMap", 1);
 

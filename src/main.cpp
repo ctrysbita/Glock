@@ -161,9 +161,20 @@ int main(int argc, char **argv) {
       context.enable_particle_ = !context.enable_particle_;
       last_keyboard_event = glfwGetTime();
     }
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS &&
+        glfwGetTime() - last_keyboard_event > 1.0) {
+      context.enable_dynamic_light_ = !context.enable_dynamic_light_;
+      last_keyboard_event = glfwGetTime();
+    }
 
     // Process camera movement.
     context.get_camera().ProcessKeyboard(window);
+
+    // Sync light position if dynamic light enabled.
+    if (context.enable_dynamic_light_)
+      context.light_position_ = context.get_camera().position_;
+    else
+      context.light_position_ = glm::vec3(2, 2, 2);
 
     // Render scene.
     Display(sky, dial, earth, mars, jupiter, particle_mars, particle_earth);

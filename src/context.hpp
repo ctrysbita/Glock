@@ -41,9 +41,10 @@ class Context {
 
   // Public properties.
 
-  glm::vec3 light_position_ = glm::vec3(2.0f, 2.0f, 2.0f);
   bool enable_shadow_ = true;
   bool enable_particle_ = true;
+  bool enable_dynamic_light_ = false;
+  glm::vec3 light_position_ = glm::vec3(2.0f, 2.0f, 2.0f);
 
   glm::vec3 earth_pos_;
   glm::vec3 mars_pos_;

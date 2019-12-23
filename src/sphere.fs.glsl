@@ -8,8 +8,8 @@ out vec4 FragmentColor;
 
 uniform sampler2D Texture;
 uniform vec3 ViewPos;
+uniform vec3 LightPos = vec3(2, 2, 2);
 
-vec3 lightPos = vec3(2, 2, 2);
 vec3 lightColor = vec3(1);
 
 void main() {
@@ -20,7 +20,7 @@ void main() {
     vec3 ambient = 0.1 * textureColor;
 
     // Diffuse
-    vec3 lightDir = normalize(lightPos - FragmentPos);
+    vec3 lightDir = normalize(LightPos - FragmentPos);
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diff * textureColor;
 
