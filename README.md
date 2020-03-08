@@ -1,6 +1,18 @@
 # Glock
 
-Glock is a clock powered by OpenGL.
+A galaxy clock written in modern OpenGL.
+
+![ScreenShot](https://user-images.githubusercontent.com/8357481/76166874-059a9d00-619d-11ea-965c-e7f997181833.png)
+
+## Features Implemented
+
+- Cube Map
+- Shader & Lighting
+- Lighting Maps
+- Camera System
+- Texture
+- Shadow
+- Particle System
 
 ## Keyboard & Mouse Events
 
@@ -16,3 +28,9 @@ Glock is a clock powered by OpenGL.
 
     - Mouse movement = Move perspective.
     - Mouse scroll up/down = Zoom in/out.
+
+## License
+
+Licensed under GPLv3 with additional terms:
+
+NOT allowed to use this project as homework / assignment directly.
